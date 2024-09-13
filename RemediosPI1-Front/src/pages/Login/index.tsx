@@ -1,17 +1,15 @@
-import { useNavigate } from 'react-router-dom'
-import { Flex, Button, Image } from '@chakra-ui/react'
-
 import Logo from '../../assets/logo.png'
-import RemedioSolidario from '../../assets/logo-branco.png'
 import Background from '../../assets/background-home.jpg'
 
-export default function Login() {
-  const navigate = useNavigate()
+import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link } from '@chakra-ui/react'
+import { Field, Form, Formik, FormikHelpers, FormikValues } from 'formik'
 
-  const handleClick = () => {
-    navigate('/home/paciente')
-  }
-  
+export default function Login() {
+
+  const initialValues = () => { }
+  const validationSchema = () => { }
+  const handleSubmitForm = () => { }
+
   return (
     <>
       <Flex
@@ -23,40 +21,62 @@ export default function Login() {
         bgSize='cover'
         bgRepeat='no-repeat'
       >
-        <Flex
+        <Box
           boxSize='md'
           bg='#247ba0'
-          justify='center'
-          align='center'
-          direction='column'
+          p='10'
           borderRadius='md'
-          boxShadow='md'
+          boxShadow='md'      
+          alignItems='center'    
         >
-          <Image
-            src={Logo}
-            alt='Imagem mãos com remédio'
-            boxSize='120px'
-            mb='12'
-          />
-          <Image
-            src={RemedioSolidario}
-            alt='Logo projeto Remédio Solidário'
-            width='220px'
-            mb='16'
-          />
-          <Button
-            onClick={handleClick}
-            variant='outline'
-            color='white'
-            width='150px'
-            _hover={{
-              color:'#247ba0',
-              bg: 'white'
-            }}
+
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmitForm}
           >
-            Entrar
-          </Button>
-        </Flex>
+
+            <Form>
+              <Image
+                src={Logo}
+                alt='Imagem mãos com remédio'
+                boxSize='80px'
+                mb='8'
+              />
+
+              <FormControl h='60px'>
+                <FormLabel htmlFor='email' color='#fff'>E-mail</FormLabel>
+                <Field as={Input} id='email' name='email' type='text' placeholder='Digite seu e-mail' />
+                {/* {errors.nome && touched.nome && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.nome}</Text>} */}
+              </FormControl>
+
+              <FormControl mt={7} h='60px'>
+                <FormLabel htmlFor='password' color='#fff'>Senha</FormLabel>
+                <Field as={Input} id='password' name='password' type='password' placeholder='Digite sua senha' />
+                {/* {errors.nome && touched.nome && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.nome}</Text>} */}
+              </FormControl>
+
+              <Button
+                onClick={handleSubmitForm}
+                variant='outline'
+                color='white'
+                width='150px'
+                mt='50px'
+                _hover={{
+                  color: '#247ba0',
+                  bg: 'white'
+                }}
+              >
+                Entrar
+              </Button>
+
+              <Text color='#000' fontSize='sm' mt='6px'>Não possui conta? <Link fontWeight="semibold">Sign Up</Link></Text>
+
+            </Form>
+
+          </Formik>
+
+        </Box>
       </Flex>
     </>
   )
