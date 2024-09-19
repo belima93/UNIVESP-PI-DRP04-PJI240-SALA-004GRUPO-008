@@ -2,13 +2,27 @@ import Logo from '../../assets/logo.png'
 import Background from '../../assets/background-home.jpg'
 
 import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link } from '@chakra-ui/react'
-import { Field, Form, Formik, FormikHelpers, FormikValues } from 'formik'
+import { Field, Form, Formik, FormikHelpers } from 'formik'
+
+interface FormData {
+  login: string
+  password: string
+}
 
 export default function Login() {
 
-  const initialValues = () => { }
-  const validationSchema = () => { }
-  const handleSubmitForm = () => { }
+  const initialValues: FormData = {
+    login: '',
+    password: ''
+  }
+
+  // const validationSchema = () => { }
+
+
+  const handleSubmitLogin = (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
+    console.log(values)
+    resetForm()
+  }
 
   return (
     <>
@@ -38,19 +52,20 @@ export default function Login() {
 
           <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmitForm}
+            // validationSchema={validationSchema}
+            onSubmit={handleSubmitLogin}
           >
 
             <Form>
 
               <FormControl h='60px'>
-                <FormLabel htmlFor='email' color='#fff'>E-mail</FormLabel>
+                <FormLabel htmlFor='login' color='#fff'>Login</FormLabel>
                 <Field
                   as={Input}
-                  id='email'
-                  name='email'
+                  id='login'
+                  name='login'
                   type='text'
+                  autoComplete='username'
                   placeholder='Digite seu e-mail'
                   sx={{
                     '::placeholder': {
@@ -58,7 +73,7 @@ export default function Login() {
                     },
                   }}
                 />
-                {/* {errors.email && touched.email && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.email}</Text>} */}
+                {/* {errors.login && touched.login && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.login}</Text>} */}
               </FormControl>
 
               <FormControl mt={7} h='60px'>
@@ -68,6 +83,7 @@ export default function Login() {
                   id='password'
                   name='password'
                   type='password'
+                  autoComplete='current-password'
                   placeholder='Digite sua senha'
                   sx={{
                     '::placeholder': {
@@ -79,7 +95,7 @@ export default function Login() {
               </FormControl>
 
               <Button
-                onClick={handleSubmitForm}
+                type='submit'
                 variant='outline'
                 color='white'
                 width='150px'
