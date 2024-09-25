@@ -3,6 +3,7 @@ import Background from '../../assets/background-home.jpg'
 
 import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link } from '@chakra-ui/react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
+import * as Yup from 'yup'
 
 interface FormData {
   login: string
@@ -16,7 +17,15 @@ export default function Login() {
     password: ''
   }
 
-  // const validationSchema = () => { }
+  const validationSchema = Yup.object({
+    login: Yup.string()
+      .email('Digite um e-mail válido')
+      .required('O e-mail obrigatório'),
+    password: Yup.string()
+      .required('A senha é obrigatória')
+      .min(6, 'A senha deve conter 6 digitos')
+    // .matches(/^[^\d]+$/, 'Nome não pode conter números'),
+  })
 
 
   const handleSubmitLogin = (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
@@ -52,67 +61,66 @@ export default function Login() {
 
           <Formik
             initialValues={initialValues}
-            // validationSchema={validationSchema}
+            validationSchema={validationSchema}
             onSubmit={handleSubmitLogin}
           >
+            {({ errors, touched }) => (
+              <Form noValidate>
 
-            <Form>
+                <FormControl h='60px'>
+                  <FormLabel htmlFor='login' color='#fff'>Login</FormLabel>
+                  <Field
+                    as={Input}
+                    id='login'
+                    name='login'
+                    type='email'
+                    autoComplete='username'
+                    placeholder='Digite seu e-mail'
+                    sx={{
+                      '::placeholder': {
+                        color: 'gray.800'
+                      },
+                    }}
+                  />
+                  {errors.login && touched.login && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.login}</Text>}
+                </FormControl>
 
-              <FormControl h='60px'>
-                <FormLabel htmlFor='login' color='#fff'>Login</FormLabel>
-                <Field
-                  as={Input}
-                  id='login'
-                  name='login'
-                  type='text'
-                  autoComplete='username'
-                  placeholder='Digite seu e-mail'
-                  sx={{
-                    '::placeholder': {
-                      color: 'gray.800'
-                    },
+                <FormControl mt={10} h='60px'>
+                  <FormLabel htmlFor='password' color='#fff'>Senha</FormLabel>
+                  <Field
+                    as={Input}
+                    id='password'
+                    name='password'
+                    type='password'
+                    autoComplete='current-password'
+                    placeholder='Digite sua senha'
+                    sx={{
+                      '::placeholder': {
+                        color: 'gray.800'
+                      },
+                    }}
+                  />
+                  {errors.password && touched.password && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.password}</Text>}
+                </FormControl>
+
+                <Button
+                  type='submit'
+                  variant='outline'
+                  color='white'
+                  width='150px'
+                  mt='50px'
+                  _hover={{
+                    color: '#247ba0',
+                    bg: 'white'
                   }}
-                />
-                {/* {errors.login && touched.login && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.login}</Text>} */}
-              </FormControl>
+                >
+                  Entrar
+                </Button>
 
-              <FormControl mt={7} h='60px'>
-                <FormLabel htmlFor='password' color='#fff'>Senha</FormLabel>
-                <Field
-                  as={Input}
-                  id='password'
-                  name='password'
-                  type='password'
-                  autoComplete='current-password'
-                  placeholder='Digite sua senha'
-                  sx={{
-                    '::placeholder': {
-                      color: 'gray.800'
-                    },
-                  }}
-                />
-                {/* {errors.password && touched.password && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.password}</Text>} */}
-              </FormControl>
+                <Text color='#000' fontSize='sm' mt='6px'>Não possui conta? <Link fontWeight="bold">Criar conta</Link></Text>
 
-              <Button
-                type='submit'
-                variant='outline'
-                color='white'
-                width='150px'
-                mt='50px'
-                _hover={{
-                  color: '#247ba0',
-                  bg: 'white'
-                }}
-              >
-                Entrar
-              </Button>
-
-              <Text color='#000' fontSize='sm' mt='6px'>Não possui conta? <Link fontWeight="bold">Criar conta</Link></Text>
-
-            </Form>
-
-
+              </Form>
+            )}
 
           </Formik>
 
