@@ -4,9 +4,7 @@ import { IoIosArrowDown } from "react-icons/io"
 import { Box, Flex, Image, List, UnorderedList } from '@chakra-ui/react'
 
 import { MenuItems } from '../../common/MenuItems'
-
 import Logo from '../../assets/logo.png'
-
 import HideMenu from '../../assets/close-menu.png'
 
 interface HomeProps { }
