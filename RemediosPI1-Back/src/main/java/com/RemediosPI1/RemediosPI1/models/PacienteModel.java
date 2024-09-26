@@ -14,8 +14,16 @@ public class PacienteModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String nome;
-    private String endereco;
-    private String CPF;
+
+    private String rua;
+    private String numero;
+    private String cidade;
+    private String estado;
+
+    private String cpf;
+
+    private String telefone;
 
 }
