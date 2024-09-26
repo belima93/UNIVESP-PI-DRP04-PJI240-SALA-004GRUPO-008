@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Login from '../pages/Login'
+import Register from '../pages/Register'
 import Home from '../pages/Home'
 import Patient from '../pages/Patient'
 import Medicine from '../pages/Medicament'
@@ -10,7 +11,8 @@ import MedicamentRegistration from '../pages/MedicamentRegistration'
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Register />} />
+      {/* <Route path="/" element={<Login />} /> */}
       <Route path="/home" element={<Home />}>
         <Route path='paciente' element={<Patient />} />
         <Route path='lista-paciente' element={<PatientRegistration />} />

@@ -8,15 +8,21 @@ import { toast } from 'react-toastify'
 import { api } from '../../services/api'
 
 interface FormData {
+  name: string
+  cpf: string
   email: string
   password: string
+  confirmPassword: string
 }
 
-export default function Login() {
+export default function Register() {
 
   const initialValues: FormData = {
+    name: '',
+    cpf: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   }
 
   const validationSchema = Yup.object({
@@ -26,7 +32,7 @@ export default function Login() {
     password: Yup.string()
       .required('A senha é obrigatória')
       .min(6, 'A senha deve conter 6 digitos')
-    // .matches(/^[^\d]+$/, 'Nome não pode conter números'),
+ 
   })
 
 
