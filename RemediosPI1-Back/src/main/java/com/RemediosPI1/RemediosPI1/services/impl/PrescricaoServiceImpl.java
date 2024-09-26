@@ -33,10 +33,12 @@ public class PrescricaoServiceImpl implements PrescricaoService {
         return prescricaoRepository.findAll();
     }
 
+
     @Override
     public Optional<PrescricaoModel> getPrescricaoById(Long id) {
-        return Optional.empty();
+        return prescricaoRepository.findById(id);
     }
+
 
     @Override
     public PrescricaoModel savePrescricao(PrescricaoModel prescricao) throws Exception {
@@ -44,7 +46,7 @@ public class PrescricaoServiceImpl implements PrescricaoService {
 
         prescricaoPersistir.setData(prescricao.getData());
 
-        // Busca o paciente e associa no objeto prescricaoPersistir
+
 
         Optional<PacienteModel> pacienteBancoDados = pacienteRepository.findByNome(prescricao.getPaciente().getNome());
 
@@ -54,7 +56,7 @@ public class PrescricaoServiceImpl implements PrescricaoService {
             throw new BusinessException("Paciente não encontrado!");
         }
 
-        // Busca a lista de medicamentos e para cada um atualiza a quantidade no banco de dados e associa no objeto prescricaoPersistir
+
 
         List<MedicamentoModel> medicamentoListPersistir = new ArrayList<>();
 
