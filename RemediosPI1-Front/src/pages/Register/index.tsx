@@ -1,13 +1,14 @@
 import Logo from '../../assets/logo.png'
 import Background from '../../assets/background-home.jpg'
 
-import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link } from '@chakra-ui/react'
+import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text } from '@chakra-ui/react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import { api } from '../../services/api'
 
 interface FormData {
+  id: number
   name: string
   cpf: string
   email: string
@@ -15,9 +16,28 @@ interface FormData {
   confirmPassword: string
 }
 
+const maskCPF = (value: string) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+    .replace(/(-\d{2})\d+?$/, "$1")
+}
+
+const validateCPF = (cpf: string) => {
+  const regex = /^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}-?[0-9]{2}$/
+
+  if (!regex.test(cpf)) {
+    return false
+  }
+  return true
+}
+
 export default function Register() {
 
   const initialValues: FormData = {
+    id: 0,
     name: '',
     cpf: '',
     email: '',
@@ -26,13 +46,17 @@ export default function Register() {
   }
 
   const validationSchema = Yup.object({
-    login: Yup.string()
+    cpf: Yup.string().required('CPF é obrigatório').test('cpf', 'CPF inválido', validateCPF),
+    name: Yup.string().required('Nome é obrigatório').matches(/^[^\d]+$/, 'Nome não pode conter números'),
+    email: Yup.string()
       .email('Digite um e-mail válido')
-      .required('O e-mail obrigatório'),
+      .required('E-mail obrigatório'),
     password: Yup.string()
       .required('A senha é obrigatória')
+      .min(6, 'A senha deve conter 6 digitos'),
+    confirmPassword: Yup.string()
+      .required('A confirmação da senha é obrigatória')
       .min(6, 'A senha deve conter 6 digitos')
- 
   })
 
 
@@ -43,13 +67,13 @@ export default function Register() {
           'Content-Type': 'application/json'
         }
       })
-    
+
       if (status === 201 || status === 200) {
-        toast.success('Paciente cadastrado com sucesso!')
+        toast.success('Usuário cadastrado com sucesso!')
         resetForm()
       }
       if (status === 409) {
-        toast.error('Paciente já cadastrado')
+        toast.error('Usuário já cadastrado')
       }
 
     } catch (err) {
@@ -61,6 +85,7 @@ export default function Register() {
     <>
       <Flex
         height='100vh'
+        // h='100%'
         justify='center'
         align='center'
         bgImage={`url(${Background})`}
@@ -69,17 +94,18 @@ export default function Register() {
         bgRepeat='no-repeat'
       >
         <Box
-          boxSize='md'
+          h='600px'
+          w='40%'
           bg='#247ba0'
-          p='10'
+          px='10'
+          pt='2'
           borderRadius='md'
           boxShadow='md'
         >
           <Image
             src={Logo}
             alt='Imagem mãos com remédio'
-            boxSize='80px'
-            mb='8'
+            boxSize='60px'
             margin='0 auto'
           />
 
@@ -88,60 +114,125 @@ export default function Register() {
             validationSchema={validationSchema}
             onSubmit={handleSubmitLogin}
           >
-            {({ errors, touched }) => (
+            {({ errors, setFieldValue, values, touched }) => (
               <Form noValidate>
+                <Flex flexDirection='column' gap='35px'>
 
-                <FormControl h='60px'>
-                  <FormLabel htmlFor='login' color='#fff'>Login</FormLabel>
-                  <Field
-                    as={Input}
-                    id='login'
-                    name='login'
-                    type='email'
-                    autoComplete='username'
-                    placeholder='Digite seu e-mail'
-                    sx={{
-                      '::placeholder': {
-                        color: 'gray.800'
-                      },
+                  <FormControl h='60px'>
+                    <FormLabel htmlFor='name' color='#fff'>Nome</FormLabel>
+                    <Field
+                      as={Input}
+                      id='name'
+                      name='name'
+                      type='name'
+                      autoComplete='current-name'
+                      placeholder='Digite seu nome'
+                      sx={{
+                        '::placeholder': {
+                          color: 'gray.800'
+                        },
+                      }}
+                    />
+                    {errors.name && touched.name && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.name}</Text>}
+                  </FormControl>
+
+                  <FormControl
+                    h='60px'>
+                    <FormLabel htmlFor='cpf' color='#FFF'>CPF</FormLabel>
+                    <Field
+                      as={Input}
+                      id='cpf'
+                      name='cpf'
+                      type='text'
+                      placeholder='Digite o CPF'
+                      sx={{
+                        '::placeholder': {
+                          color: 'gray.800'
+                        },
+                      }}
+                      width='30%'
+                      onChange={(e: { target: { value: string } }) => {
+                        const maskedCPF = maskCPF(e.target.value)
+                        setFieldValue('cpf', maskedCPF)
+                      }}
+                      value={values.cpf}
+                      autoFocus
+                    />
+                    {errors.cpf && touched.cpf && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.cpf}</Text>}
+                  </FormControl>
+
+                  <FormControl
+                    h='60px'>
+                    <FormLabel htmlFor='email' color='#fff'>E-mail</FormLabel>
+                    <Field
+                      as={Input}
+                      id='email'
+                      name='email'
+                      type='email'
+                      autoComplete='email'
+                      placeholder='Digite seu e-mail'
+                      sx={{
+                        '::placeholder': {
+                          color: 'gray.800'
+                        },
+                      }}
+                    />
+                    {errors.email && touched.email && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.email}</Text>}
+                  </FormControl>
+
+                  <FormControl
+                    h='60px'>
+                    <FormLabel htmlFor='password' color='#fff'>Senha</FormLabel>
+                    <Field
+                      as={Input}
+                      id='password'
+                      name='password'
+                      type='password'
+                      autoComplete='current-password'
+                      placeholder='Digite sua senha'
+                      sx={{
+                        '::placeholder': {
+                          color: 'gray.800'
+                        },
+                      }}
+                    />
+                    {errors.password && touched.password && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.password}</Text>}
+                  </FormControl>
+
+                  <FormControl
+                    h='60px'>
+                    <FormLabel htmlFor='confirmPassword' color='#fff'>Confirmar Senha</FormLabel>
+                    <Field
+                      as={Input}
+                      id='confirmPassword'
+                      name='confirmPassword'
+                      type='confirmPassword'
+                      autoComplete='current-confirmPassword'
+                      placeholder='Digite sua senha novamente'
+                      sx={{
+                        '::placeholder': {
+                          color: 'gray.800'
+                        },
+                      }}
+                    />
+                    {errors.confirmPassword && touched.confirmPassword && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.confirmPassword}</Text>}
+                  </FormControl>
+
+                  <Button
+                    type='submit'
+                    variant='outline'
+                    color='white'
+                    width='150px'
+                    mt='5px'
+                    _hover={{
+                      color: '#247ba0',
+                      bg: 'white'
                     }}
-                  />
-                  {errors.email && touched.email && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.email}</Text>}
-                </FormControl>
+                  >
+                    Entrar
+                  </Button>
 
-                <FormControl mt={10} h='60px'>
-                  <FormLabel htmlFor='password' color='#fff'>Senha</FormLabel>
-                  <Field
-                    as={Input}
-                    id='password'
-                    name='password'
-                    type='password'
-                    autoComplete='current-password'
-                    placeholder='Digite sua senha'
-                    sx={{
-                      '::placeholder': {
-                        color: 'gray.800'
-                      },
-                    }}
-                  />
-                  {errors.password && touched.password && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.password}</Text>}
-                </FormControl>
-
-                <Button
-                  type='submit'
-                  variant='outline'
-                  color='white'
-                  width='150px'
-                  mt='50px'
-                  _hover={{
-                    color: '#247ba0',
-                    bg: 'white'
-                  }}
-                >
-                  Entrar
-                </Button>
-
-                <Text color='#000' fontSize='sm' mt='6px'>Não possui conta? <Link fontWeight="bold">Criar conta</Link></Text>
+                </Flex>
 
               </Form>
             )}
