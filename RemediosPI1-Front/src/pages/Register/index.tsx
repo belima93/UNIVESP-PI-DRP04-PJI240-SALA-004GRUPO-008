@@ -47,7 +47,7 @@ export default function Register() {
 
   const validationSchema = Yup.object({
     cpf: Yup.string().required('CPF é obrigatório').test('cpf', 'CPF inválido', validateCPF),
-    name: Yup.string().required('Nome é obrigatório').matches(/^[^\d]+$/, 'Nome não pode conter números'),
+    name: Yup.string().required('O nome é obrigatório').matches(/^[^\d]+$/, 'Nome não pode conter números'),
     email: Yup.string()
       .email('Digite um e-mail válido')
       .required('E-mail obrigatório'),
@@ -56,29 +56,31 @@ export default function Register() {
       .min(6, 'A senha deve conter 6 digitos'),
     confirmPassword: Yup.string()
       .required('A confirmação da senha é obrigatória')
-      .min(6, 'A senha deve conter 6 digitos')
+      .oneOf([Yup.ref('password')], 'As senhas devem ser iguais')
   })
 
-
   const handleSubmitLogin = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
-    try {
-      const { status } = await api.post('login', values, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+    console.log("Register",values)
+    toast.success('Usuário cadastrado com sucesso!')
+    resetForm()
+    // try {
+    //   const { status } = await api.post('login', values, {
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   })
 
-      if (status === 201 || status === 200) {
-        toast.success('Usuário cadastrado com sucesso!')
-        resetForm()
-      }
-      if (status === 409) {
-        toast.error('Usuário já cadastrado')
-      }
+    //   if (status === 201 || status === 200) {
+    //     toast.success('Usuário cadastrado com sucesso!')
+    //     resetForm()
+    //   }
+    //   if (status === 409) {
+    //     toast.error('Usuário já cadastrado')
+    //   }
 
-    } catch (err) {
-      toast.error('Falha no sistema! Tente novamente')
-    }
+    // } catch (err) {
+    //   toast.error('Falha no sistema! Tente novamente')
+    // }
   }
 
   return (
@@ -94,7 +96,7 @@ export default function Register() {
         bgRepeat='no-repeat'
       >
         <Box
-          h='600px'
+          h='620px'
           w='40%'
           bg='#247ba0'
           px='10'
@@ -124,7 +126,7 @@ export default function Register() {
                       as={Input}
                       id='name'
                       name='name'
-                      type='name'
+                      type='text'
                       autoComplete='current-name'
                       placeholder='Digite seu nome'
                       sx={{
@@ -150,7 +152,7 @@ export default function Register() {
                           color: 'gray.800'
                         },
                       }}
-                      width='30%'
+                      width='40%'
                       onChange={(e: { target: { value: string } }) => {
                         const maskedCPF = maskCPF(e.target.value)
                         setFieldValue('cpf', maskedCPF)
@@ -206,7 +208,7 @@ export default function Register() {
                       as={Input}
                       id='confirmPassword'
                       name='confirmPassword'
-                      type='confirmPassword'
+                      type='password'
                       autoComplete='current-confirmPassword'
                       placeholder='Digite sua senha novamente'
                       sx={{
