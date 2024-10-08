@@ -6,6 +6,7 @@ import { Field, Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import { api } from '../../services/api'
+import { useUser } from '../../hooks/UserContext'
 
 interface FormData {
   email: string
@@ -13,6 +14,7 @@ interface FormData {
 }
 
 export default function Login() {
+  const { putUserData, userData } = useUser()
 
   const initialValues: FormData = {
     email: '',
@@ -32,12 +34,15 @@ export default function Login() {
 
   const handleSubmitLogin = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
     try {
-      const { status } = await api.post('login', values, {
+      const { status, data } = await api.post('login', values, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
-    
+
+      putUserData(data)
+      console.log(userData)
+
       if (status === 201 || status === 200) {
         toast.success('Paciente cadastrado com sucesso!')
         resetForm()

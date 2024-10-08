@@ -5,7 +5,7 @@ import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text } from '@
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
-import { api } from '../../services/api'
+// import { api } from '../../services/api'
 
 interface FormData {
   id: number
