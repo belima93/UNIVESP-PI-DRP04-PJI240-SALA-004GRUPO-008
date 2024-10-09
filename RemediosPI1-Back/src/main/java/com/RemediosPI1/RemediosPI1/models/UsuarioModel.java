@@ -9,21 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "paciente_tb")
-public class PacienteModel {
+@Table(name = "usuario_tb")
+public class UsuarioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String nome;
+    @Column(nullable = false, unique = true)
+    private String nomeUsuario;
 
-    private String rua;
-    private String numero;
-    private String cidade;
-    private String estado;
-
-    private String cpf;
-
-    private String telefone;
-
+    @Column(nullable = false)
+    private String senha;
 }
