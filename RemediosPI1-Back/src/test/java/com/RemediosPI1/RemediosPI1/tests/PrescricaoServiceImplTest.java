@@ -1,4 +1,4 @@
-package com.RemediosPI1.RemediosPI1.services.impl;
+package com.RemediosPI1.RemediosPI1.tests;
 
 import com.RemediosPI1.RemediosPI1.exceptions.BusinessException;
 import com.RemediosPI1.RemediosPI1.models.MedicamentoModel;
@@ -7,6 +7,8 @@ import com.RemediosPI1.RemediosPI1.models.PrescricaoModel;
 import com.RemediosPI1.RemediosPI1.repositories.MedicamentoRepository;
 import com.RemediosPI1.RemediosPI1.repositories.PacienteRepository;
 import com.RemediosPI1.RemediosPI1.repositories.PrescricaoRepository;
+import com.RemediosPI1.RemediosPI1.services.impl.PrescricaoServiceImpl;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

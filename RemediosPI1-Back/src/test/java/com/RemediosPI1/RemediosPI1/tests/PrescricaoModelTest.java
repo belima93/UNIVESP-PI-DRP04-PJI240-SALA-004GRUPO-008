@@ -1,6 +1,10 @@
-package com.RemediosPI1.RemediosPI1.models;
+package com.RemediosPI1.RemediosPI1.tests;
 
 import org.junit.jupiter.api.Test;
+
+import com.RemediosPI1.RemediosPI1.models.PacienteModel;
+import com.RemediosPI1.RemediosPI1.models.PrescricaoModel;
+
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
-package com.RemediosPI1.RemediosPI1.controllers;
+package com.RemediosPI1.RemediosPI1.tests;
 
+import com.RemediosPI1.RemediosPI1.controllers.PacienteController;
 import com.RemediosPI1.RemediosPI1.models.PacienteModel;
 import com.RemediosPI1.RemediosPI1.services.PacienteService;
 import org.junit.jupiter.api.BeforeEach;

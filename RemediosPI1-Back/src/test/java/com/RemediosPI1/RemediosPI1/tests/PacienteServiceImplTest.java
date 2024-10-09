@@ -1,7 +1,9 @@
-package com.RemediosPI1.RemediosPI1.services.impl;
+package com.RemediosPI1.RemediosPI1.tests;
 
 import com.RemediosPI1.RemediosPI1.models.PacienteModel;
 import com.RemediosPI1.RemediosPI1.repositories.PacienteRepository;
+import com.RemediosPI1.RemediosPI1.services.impl.PacienteServiceImpl;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

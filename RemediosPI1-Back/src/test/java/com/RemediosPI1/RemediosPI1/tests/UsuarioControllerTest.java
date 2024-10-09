@@ -1,7 +1,13 @@
-package com.RemediosPI1.RemediosPI1.controllers;
+package com.RemediosPI1.RemediosPI1.tests;
 
-import com.RemediosPI1.RemediosPI1.models.UsuarioModel;
-import com.RemediosPI1.RemediosPI1.services.UsuarioService;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,11 +16,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import com.RemediosPI1.RemediosPI1.controllers.UsuarioController;
+import com.RemediosPI1.RemediosPI1.models.UsuarioModel;
+import com.RemediosPI1.RemediosPI1.repositories.UsuarioRepository;
+import com.RemediosPI1.RemediosPI1.services.UsuarioService;
 
 public class UsuarioControllerTest {
 
@@ -25,6 +30,9 @@ public class UsuarioControllerTest {
 
     @Mock
     private UsuarioService usuarioService;
+    
+    @Mock
+    private UsuarioRepository usuarioRepository;
 
     @BeforeEach
     public void setUp() {
@@ -36,7 +44,7 @@ public class UsuarioControllerTest {
     public void testCriarUsuarioComSucesso() throws Exception {
         UsuarioModel usuario = new UsuarioModel(1L, "novo_usuario", "senha123");
 
-        when(usuarioService.salvarUsuario(any(UsuarioModel.class))).thenReturn(usuario);
+        when(usuarioService.salvarUsuario(usuario)).thenReturn(usuario);
 
         String jsonRequest = """
         {
@@ -54,6 +62,6 @@ public class UsuarioControllerTest {
                 .andExpect(jsonPath("$.nomeUsuario").value("novo_usuario"))
                 .andExpect(jsonPath("$.senha").value("senha123"));
 
-        verify(usuarioService, times(1)).salvarUsuario(any(UsuarioModel.class));
+        verify(usuarioService, times(1)).salvarUsuario(usuario);
     }
 }

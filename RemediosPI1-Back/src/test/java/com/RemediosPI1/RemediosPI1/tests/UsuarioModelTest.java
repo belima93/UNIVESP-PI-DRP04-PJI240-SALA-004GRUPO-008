@@ -1,6 +1,9 @@
-package com.RemediosPI1.RemediosPI1.models;
+package com.RemediosPI1.RemediosPI1.tests;
 
 import org.junit.jupiter.api.Test;
+
+import com.RemediosPI1.RemediosPI1.models.UsuarioModel;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UsuarioModelTest {
