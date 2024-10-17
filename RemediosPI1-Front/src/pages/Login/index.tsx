@@ -28,7 +28,6 @@ export default function Login() {
     password: Yup.string()
       .required('A senha é obrigatória')
       .min(6, 'A senha deve conter 6 digitos')
-    // .matches(/^[^\d]+$/, 'Nome não pode conter números'),
   })
 
 
@@ -44,11 +43,11 @@ export default function Login() {
       console.log(userData)
 
       if (status === 201 || status === 200) {
-        toast.success('Paciente cadastrado com sucesso!')
+        toast.success('Usuário cadastrado com sucesso!')
         resetForm()
       }
       if (status === 409) {
-        toast.error('Paciente já cadastrado')
+        toast.error('Usuário já cadastrado')
       }
 
     } catch (err) {
