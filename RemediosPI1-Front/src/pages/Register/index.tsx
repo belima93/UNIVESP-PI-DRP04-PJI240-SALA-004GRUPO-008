@@ -1,10 +1,11 @@
 import Logo from '../../assets/logo.png'
 import Background from '../../assets/background-home.jpg'
 
-import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text } from '@chakra-ui/react'
+import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link } from '@chakra-ui/react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
+import { Link as RouterLink } from 'react-router-dom'
 // import { api } from '../../services/api'
 
 interface FormData {
@@ -50,7 +51,7 @@ export default function Register() {
     name: Yup.string().required('O nome é obrigatório').matches(/^[^\d]+$/, 'Nome não pode conter números'),
     email: Yup.string()
       .email('Digite um e-mail válido')
-      .required('E-mail obrigatório'),
+      .required('O e-mail é obrigatório'),
     password: Yup.string()
       .required('A senha é obrigatória')
       .min(6, 'A senha deve conter 6 digitos'),
@@ -60,7 +61,7 @@ export default function Register() {
   })
 
   const handleSubmitLogin = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
-    console.log("Register",values)
+    console.log("Register", values)
     toast.success('Usuário cadastrado com sucesso!')
     resetForm()
     // try {
@@ -87,7 +88,6 @@ export default function Register() {
     <>
       <Flex
         height='100vh'
-        // h='100%'
         justify='center'
         align='center'
         bgImage={`url(${Background})`}
@@ -99,16 +99,18 @@ export default function Register() {
           h='620px'
           w='40%'
           bg='#247ba0'
-          px='10'
-          pt='2'
+          p='10'
           borderRadius='md'
           boxShadow='md'
+          position='relative'
         >
           <Image
             src={Logo}
             alt='Imagem mãos com remédio'
-            boxSize='60px'
-            margin='0 auto'
+            boxSize='80px'
+            position='absolute'
+            top='30px'
+            right='50px'
           />
 
           <Formik
@@ -119,24 +121,6 @@ export default function Register() {
             {({ errors, setFieldValue, values, touched }) => (
               <Form noValidate>
                 <Flex flexDirection='column' gap='35px'>
-
-                  <FormControl h='60px'>
-                    <FormLabel htmlFor='name' color='#fff'>Nome</FormLabel>
-                    <Field
-                      as={Input}
-                      id='name'
-                      name='name'
-                      type='text'
-                      autoComplete='current-name'
-                      placeholder='Digite seu nome'
-                      sx={{
-                        '::placeholder': {
-                          color: 'gray.800'
-                        },
-                      }}
-                    />
-                    {errors.name && touched.name && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.name}</Text>}
-                  </FormControl>
 
                   <FormControl
                     h='60px'>
@@ -161,6 +145,24 @@ export default function Register() {
                       autoFocus
                     />
                     {errors.cpf && touched.cpf && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.cpf}</Text>}
+                  </FormControl>
+
+                  <FormControl h='60px'>
+                    <FormLabel htmlFor='name' color='#fff'>Nome</FormLabel>
+                    <Field
+                      as={Input}
+                      id='name'
+                      name='name'
+                      type='text'
+                      autoComplete='current-name'
+                      placeholder='Digite seu nome'
+                      sx={{
+                        '::placeholder': {
+                          color: 'gray.800'
+                        },
+                      }}
+                    />
+                    {errors.name && touched.name && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.name}</Text>}
                   </FormControl>
 
                   <FormControl
@@ -225,14 +227,28 @@ export default function Register() {
                     variant='outline'
                     color='white'
                     width='150px'
-                    mt='5px'
+                    mt='12px'
                     _hover={{
                       color: '#247ba0',
                       bg: 'white'
                     }}
                   >
-                    Entrar
+                    Cadastrar
                   </Button>
+
+                  <Text
+                    color='#000'
+                    fontSize='sm'
+                    mt='20px'
+                    position='absolute'
+                    bottom='30px'
+                    right='45px'
+                  >
+                    Já possuo cadastro! {}
+                    <Link as={RouterLink} to="/" fontWeight="bold">
+                      Entrar
+                    </Link>
+                  </Text>
 
                 </Flex>
 

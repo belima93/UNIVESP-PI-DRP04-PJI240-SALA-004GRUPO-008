@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Login from '../pages/Login'
-// import Register from '../pages/Register'
+import Register from '../pages/Register'
 import Home from '../pages/Home'
 import Patient from '../pages/Patient'
 import Medicine from '../pages/Medicament'
@@ -13,8 +13,8 @@ export default function AppRoutes() {
   return (
     <UserProvider>
       <Routes>
-        {/* <Route path="/" element={<Register />} /> */}
         <Route path="/" element={<Login />} />
+        <Route path="cadastro" element={<Register />} />
         <Route path="/home" element={<Home />}>
           <Route path='paciente' element={<Patient />} />
           <Route path='lista-paciente' element={<PatientRegistration />} />

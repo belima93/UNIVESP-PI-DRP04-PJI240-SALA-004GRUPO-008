@@ -7,6 +7,7 @@ import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import { api } from '../../services/api'
 import { useUser } from '../../hooks/UserContext'
+import { Link as RouterLink } from 'react-router-dom'
 
 interface FormData {
   email: string
@@ -24,7 +25,7 @@ export default function Login() {
   const validationSchema = Yup.object({
     email: Yup.string()
       .email('Digite um e-mail válido')
-      .required('O e-mail obrigatório'),
+      .required('O e-mail é obrigatório'),
     password: Yup.string()
       .required('A senha é obrigatória')
       .min(6, 'A senha deve conter 6 digitos')
@@ -39,14 +40,10 @@ export default function Login() {
       })
 
       putUserData(data)
-      console.log("DADOS",data)
 
       if (status === 201 || status === 200) {
         toast.success('Seja bem vinda(o)!')
         resetForm()
-      }
-      if (status === 409) {
-        toast.error('Usuário já cadastrado')
       }
 
     } catch (err) {
@@ -138,7 +135,7 @@ export default function Login() {
                   Entrar
                 </Button>
 
-                <Text color='#000' fontSize='sm' mt='20px'>Não possui conta? <Link fontWeight="bold">Criar conta</Link></Text>
+                <Text color='#000' fontSize='sm' mt='20px'>Não possui conta? <Link as={RouterLink} to="cadastro" fontWeight="bold">Criar conta</Link></Text>
 
               </Form>
             )}
