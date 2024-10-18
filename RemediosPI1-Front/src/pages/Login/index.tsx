@@ -14,7 +14,7 @@ interface FormData {
 }
 
 export default function Login() {
-  const { putUserData, userData } = useUser()
+  const { putUserData } = useUser()
 
   const initialValues: FormData = {
     email: '',
@@ -22,7 +22,7 @@ export default function Login() {
   }
 
   const validationSchema = Yup.object({
-    login: Yup.string()
+    email: Yup.string()
       .email('Digite um e-mail válido')
       .required('O e-mail obrigatório'),
     password: Yup.string()
@@ -33,17 +33,16 @@ export default function Login() {
 
   const handleSubmitLogin = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
     try {
-      const { status, data } = await api.post('login', values, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      const { status, data } = await api.post('login', {
+        email: values.email,
+        password: values.password
       })
 
       putUserData(data)
-      console.log(userData)
+      console.log("DADOS",data)
 
       if (status === 201 || status === 200) {
-        toast.success('Usuário cadastrado com sucesso!')
+        toast.success('Seja bem vinda(o)!')
         resetForm()
       }
       if (status === 409) {
@@ -90,11 +89,11 @@ export default function Login() {
               <Form noValidate>
 
                 <FormControl h='60px'>
-                  <FormLabel htmlFor='login' color='#fff'>Login</FormLabel>
+                  <FormLabel htmlFor='email' color='#fff'>Login</FormLabel>
                   <Field
                     as={Input}
-                    id='login'
-                    name='login'
+                    id='email'
+                    name='email'
                     type='email'
                     autoComplete='username'
                     placeholder='Digite seu e-mail'
@@ -139,7 +138,7 @@ export default function Login() {
                   Entrar
                 </Button>
 
-                <Text color='#000' fontSize='sm' mt='6px'>Não possui conta? <Link fontWeight="bold">Criar conta</Link></Text>
+                <Text color='#000' fontSize='sm' mt='20px'>Não possui conta? <Link fontWeight="bold">Criar conta</Link></Text>
 
               </Form>
             )}
