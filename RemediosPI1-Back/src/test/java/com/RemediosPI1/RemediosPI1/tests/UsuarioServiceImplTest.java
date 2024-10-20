@@ -30,7 +30,7 @@ public class UsuarioServiceImplTest {
 
     @Test
     public void testAutenticarComSucesso() {
-        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "senha123");
+        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "usuario@gmail.com", "senha123");
         when(usuarioRepository.findByNomeUsuario("usuario_teste")).thenReturn(Optional.of(usuario));
 
         Optional<UsuarioModel> resultado = usuarioService.autenticar("usuario_teste", "senha123");
@@ -42,7 +42,7 @@ public class UsuarioServiceImplTest {
 
     @Test
     public void testAutenticarComFalhaSenhaIncorreta() {
-        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "senha123");
+        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "usuario@gmail.com", "senha123");
         when(usuarioRepository.findByNomeUsuario("usuario_teste")).thenReturn(Optional.of(usuario));
 
         Optional<UsuarioModel> resultado = usuarioService.autenticar("usuario_teste", "senhaErrada");
@@ -63,7 +63,7 @@ public class UsuarioServiceImplTest {
 
     @Test
     public void testSalvarUsuarioComSucesso() {
-        UsuarioModel novoUsuario = new UsuarioModel(1L, "novo_usuario", "senha123");
+        UsuarioModel novoUsuario = new UsuarioModel(1L, "novo_usuario", "usuario@gmail.com", "senha123");
         when(usuarioRepository.findByNomeUsuario("novo_usuario")).thenReturn(Optional.empty());
         when(usuarioRepository.save(novoUsuario)).thenReturn(novoUsuario);
 
@@ -77,10 +77,10 @@ public class UsuarioServiceImplTest {
 
     @Test
     public void testSalvarUsuarioNomeExistente() {
-        UsuarioModel usuarioExistente = new UsuarioModel(1L, "usuario_existente", "senha123");
+        UsuarioModel usuarioExistente = new UsuarioModel(1L, "usuario_existente", "usuario@gmail.com","senha123");
         when(usuarioRepository.findByNomeUsuario("usuario_existente")).thenReturn(Optional.of(usuarioExistente));
 
-        UsuarioModel novoUsuario = new UsuarioModel(2L, "usuario_existente", "senha321");
+        UsuarioModel novoUsuario = new UsuarioModel(2L, "usuario_existente", "usuario@gmail.com", "senha321");
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             usuarioService.salvarUsuario(novoUsuario);
@@ -93,7 +93,7 @@ public class UsuarioServiceImplTest {
 
     @Test
     public void testBuscarPorNomeUsuario() {
-        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "senha123");
+        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "usuario@gmail.com", "senha123");
         when(usuarioRepository.findByNomeUsuario("usuario_teste")).thenReturn(Optional.of(usuario));
 
         Optional<UsuarioModel> resultado = usuarioService.buscarPorNomeUsuario("usuario_teste");

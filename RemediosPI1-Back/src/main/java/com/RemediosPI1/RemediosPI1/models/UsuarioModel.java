@@ -18,6 +18,9 @@ public class UsuarioModel {
     @Column(nullable = false, unique = true)
     private String nomeUsuario;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @Column(nullable = false)
     private String senha;
 }

@@ -42,7 +42,7 @@ public class UsuarioControllerTest {
 
     @Test
     public void testCriarUsuarioComSucesso() throws Exception {
-        UsuarioModel usuario = new UsuarioModel(1L, "novo_usuario", "senha123");
+        UsuarioModel usuario = new UsuarioModel(1L, "novo_usuario", "usuario@gmail.com", "senha123");
 
         when(usuarioService.salvarUsuario(usuario)).thenReturn(usuario);
 
@@ -50,6 +50,7 @@ public class UsuarioControllerTest {
         {
             "id": 1,
             "nomeUsuario": "novo_usuario",
+            "email": "usuario@gmail.com", 
             "senha": "senha123"
         }
         """;
@@ -60,6 +61,7 @@ public class UsuarioControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.nomeUsuario").value("novo_usuario"))
+                .andExpect(jsonPath("$.email").value("usuario@gmail.com"))
                 .andExpect(jsonPath("$.senha").value("senha123"));
 
         verify(usuarioService, times(1)).salvarUsuario(usuario);
