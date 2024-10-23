@@ -7,22 +7,22 @@ import Medicine from '../pages/Medicament'
 import Dispensation from '../pages/Dispensation'
 import PatientRegistration from '../pages/PatientRegistration'
 import MedicamentRegistration from '../pages/MedicamentRegistration'
-import { UserProvider } from '../hooks/UserContext'
+import PrivateRoute from '../routes/PrivateRoute'
 
 export default function AppRoutes() {
   return (
-    <UserProvider>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="cadastro" element={<Register />} />
-        <Route path="/home" element={<Home />}>
-          <Route path='paciente' element={<Patient />} />
-          <Route path='lista-paciente' element={<PatientRegistration />} />
-          <Route path="medicamento" element={<Medicine />} />
-          <Route path='lista-medicamento' element={<MedicamentRegistration />} />
-          <Route path="dispensacao" element={<Dispensation />} />
-        </Route>
-      </Routes>
-    </UserProvider>
+    <Routes>
+      {/* Rotas públicas */}
+      <Route path="/" element={<Login />} />
+      <Route path="cadastro" element={<Register />} />
+
+      {/* Rotas privadas com autenticação */}
+      <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+      <Route path='paciente' element={<PrivateRoute element={<Patient />} />} />
+      <Route path='lista-paciente' element={<PrivateRoute element={<PatientRegistration />} />} />
+      <Route path="medicamento" element={<PrivateRoute element={<Medicine />} />} />
+      <Route path='lista-medicamento' element={<PrivateRoute element={<MedicamentRegistration />} />} />
+      <Route path="dispensacao" element={<PrivateRoute element={<Dispensation />} />} />
+    </Routes>
   )
 }

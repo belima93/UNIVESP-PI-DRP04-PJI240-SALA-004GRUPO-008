@@ -4,15 +4,18 @@ import { ToastContainer } from 'react-toastify'
 import { ChakraProvider } from '@chakra-ui/react'
 import { theme } from './styles/theme.ts'
 import AppRoutes from './routes/routes.tsx'
+import { UserProvider } from '../../RemediosPI1-Front/src/hooks/UserContext.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </UserProvider>
       <ToastContainer autoClose={2000} theme="colored" />
     </ChakraProvider>
   </React.StrictMode>,
