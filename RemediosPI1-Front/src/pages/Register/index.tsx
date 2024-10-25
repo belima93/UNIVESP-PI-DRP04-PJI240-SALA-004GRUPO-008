@@ -141,8 +141,7 @@ export default function Register() {
                         const maskedCPF = maskCPF(e.target.value)
                         setFieldValue('cpf', maskedCPF)
                       }}
-                      value={values.cpf}
-                      autoFocus
+                      value={values.cpf}                      
                     />
                     {errors.cpf && touched.cpf && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.cpf}</Text>}
                   </FormControl>

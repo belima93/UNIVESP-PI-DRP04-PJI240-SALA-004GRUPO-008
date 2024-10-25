@@ -95,8 +95,7 @@ const Patient = () => {
                     const maskedCPF = maskCPF(e.target.value)
                     setFieldValue('cpf', maskedCPF)
                   }}
-                  value={values.cpf}
-                  autoFocus
+                  value={values.cpf}                  
                 />
                 {errors.cpf && touched.cpf && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.cpf}</Text>}
               </FormControl>

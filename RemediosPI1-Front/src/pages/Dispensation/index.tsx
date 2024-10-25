@@ -53,7 +53,7 @@ const validationSchema = Yup.object().shape({
     formula: Yup.string(),
     quantidade: Yup.number().required("Selecione pelo menos um medicamento"),
     vencimento: Yup.string(),
-  }).required("Selecione pelo menos um medicamento") 
+  }).required("Selecione pelo menos um medicamento")
 
 })
 
@@ -236,7 +236,6 @@ const Dispensation = () => {
                     name='paciente'
                     placeholder='Selecione o nome do paciente'
                     w='73%'
-                    autoFocus
                     onChange={e => {
                       const paciente = patients.find(patient => patient.id === e.target.value)
                       console.log('paciente', paciente, patients)
@@ -295,7 +294,7 @@ const Dispensation = () => {
                       type="number"
                       name="quantidade"
                       placeholder="Quantidade"
-                      value={values.quantidade || ''}                      
+                      value={values.quantidade || ''}
                     />
                     {message !== '' && (
                       <Text
@@ -315,7 +314,7 @@ const Dispensation = () => {
                       name="adicionar"
                       type='button'
                       onClick={(e) => {
-                        if(values.quantidade === 0) setMessage("Selecione a quantidade do medicamento")
+                        if (values.quantidade === 0) setMessage("Selecione a quantidade do medicamento")
                         if (values.medicamento && values.quantidade !== 0) {
 
                           handleAddMedicaments({ ...values.medicamento, quantidade: values.quantidade }, e)

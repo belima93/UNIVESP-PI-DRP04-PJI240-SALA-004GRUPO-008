@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { api } from '../../services/api'
 import { useUser } from '../../hooks/UserContext'
 import { Link as RouterLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface FormData {
   email: string
@@ -16,6 +17,7 @@ interface FormData {
 
 export default function Login() {
   const { putUserData } = useUser()
+  const navigate = useNavigate()
 
   const initialValues: FormData = {
     email: '',
@@ -42,8 +44,14 @@ export default function Login() {
       putUserData(data)
 
       if (status === 201 || status === 200) {
+
         toast.success('Seja bem vinda(o)!')
-        resetForm()
+        setTimeout(() => {
+          localStorage.setItem('remediosolidario:userLogin', JSON.stringify(data))
+          resetForm()
+          navigate('/home/paciente')
+        }, 1500)
+
       }
 
     } catch (err) {

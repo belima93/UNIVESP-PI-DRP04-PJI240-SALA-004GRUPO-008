@@ -12,17 +12,20 @@ import PrivateRoute from '../routes/PrivateRoute'
 export default function AppRoutes() {
   return (
     <Routes>
+
       {/* Rotas públicas */}
       <Route path="/" element={<Login />} />
-      <Route path="cadastro" element={<Register />} />
+      <Route path="/cadastro" element={<Register />} />
 
       {/* Rotas privadas com autenticação */}
-      <Route path="/home" element={<PrivateRoute element={<Home />} />} />
-      <Route path='paciente' element={<PrivateRoute element={<Patient />} />} />
-      <Route path='lista-paciente' element={<PrivateRoute element={<PatientRegistration />} />} />
-      <Route path="medicamento" element={<PrivateRoute element={<Medicine />} />} />
-      <Route path='lista-medicamento' element={<PrivateRoute element={<MedicamentRegistration />} />} />
-      <Route path="dispensacao" element={<PrivateRoute element={<Dispensation />} />} />
+      <Route path="/home" element={<PrivateRoute element={<Home />} />}>     
+        <Route path='paciente' element={<PrivateRoute element={<Patient />} />} />
+        <Route path='lista-paciente' element={<PrivateRoute element={<PatientRegistration />} />} />
+        <Route path="medicamento" element={<PrivateRoute element={<Medicine />} />} />
+        <Route path='lista-medicamento' element={<PrivateRoute element={<MedicamentRegistration />} />} />
+        <Route path="dispensacao" element={<PrivateRoute element={<Dispensation />} />} />
+      </Route>
+
     </Routes>
   )
 }

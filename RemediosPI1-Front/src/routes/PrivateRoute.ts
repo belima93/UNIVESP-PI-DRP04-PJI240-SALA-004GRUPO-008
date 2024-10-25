@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 interface PrivateRouteProps {
   element: ReactNode
@@ -7,15 +7,21 @@ interface PrivateRouteProps {
 
 function PrivateRoute({ element }: PrivateRouteProps) {
   const navigate = useNavigate()
-  const user = localStorage.getItem('remediosolidario:userLogin')
+  const [user, setUser] = useState<string | null>(localStorage.getItem('remediosolidario:userLogin'))
 
   useEffect(() => {
-    if (!user) {
+    const storedUser = localStorage.getItem('remediosolidario:userLogin')
+
+    console.log('User from localStorage:', storedUser)
+
+    setUser(storedUser)
+
+    if (!storedUser) {
       navigate('/', { replace: true })
     }
-  }, [user, navigate])
+  }, [navigate])
 
-  return user ?  element  : null
+  return user ? element : null
 }
 
 export default PrivateRoute

@@ -1,11 +1,5 @@
 {
-  "login": [
-    {
-      "email": "mari@gmail.com",
-      "password": "123456",
-      "id": "56ca"
-    }
-  ],
+  "login": [],
   "paciente": [
     {
       "id": "2",

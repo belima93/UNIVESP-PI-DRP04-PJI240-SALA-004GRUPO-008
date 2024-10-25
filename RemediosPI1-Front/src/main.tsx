@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <AppRoutes />
         </BrowserRouter>
       </UserProvider>
-      <ToastContainer autoClose={2000} theme="colored" />
+      <ToastContainer autoClose={1300} theme="colored" />
     </ChakraProvider>
   </React.StrictMode>,
 )
