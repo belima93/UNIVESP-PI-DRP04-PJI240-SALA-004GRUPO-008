@@ -27,7 +27,7 @@ const Medicament = () => {
   })
 
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
- 
+
     try {
       const { status } = await api.post('/api/medicamentos', values, {
         headers: {
@@ -72,20 +72,19 @@ const Medicament = () => {
                   name='formula'
                   type='text'
                   placeholder='Digite o nome do medicamento'
-                  autoFocus
                 />
                 {errors.formula && touched.formula && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.formula}</Text>}
               </FormControl>
 
               <FormControl mt={7} h='80px'>
                 <FormLabel htmlFor='quantidade' color='#808080'>Quantidade</FormLabel>
-                <Field as={Input} id='quantidade' name='quantidade' type='number' placeholder='Digite a quantidade' width='30%'/>
+                <Field as={Input} id='quantidade' name='quantidade' type='number' placeholder='Digite a quantidade' width='30%' />
                 {errors.quantidade && touched.quantidade && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.quantidade}</Text>}
               </FormControl>
 
               <FormControl mt={7} h='80px'>
                 <FormLabel htmlFor='vencimento' color='#808080'>Data do vencimento</FormLabel>
-                <Field as={Input} id='vencimento' name='vencimento' type='date' width='30%'/>
+                <Field as={Input} id='vencimento' name='vencimento' type='date' width='30%' />
                 {errors.vencimento && touched.vencimento && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.vencimento}</Text>}
               </FormControl>
 
