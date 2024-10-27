@@ -2,7 +2,7 @@ import {
   Box, Flex, FormControl, FormLabel, Input,
   Select, Text, Table, Thead, Tbody, Tr, Th, Td,
   TableContainer, Button, Tooltip, OrderedList, ListItem,
-  Image
+  Image, Heading
 } from '@chakra-ui/react'
 import { Formik, Form, FormikHelpers, Field } from 'formik'
 import { Footer, Header, MultSelect, BaseModal } from '../../components'
@@ -217,7 +217,7 @@ const Dispensation = () => {
 
               <Form>
                 <Flex alignItems='center' justify='space-between'>
-                  <Text fontWeight='bold' fontSize='xl'>Dispensação de Medicamentos</Text>
+                  <Heading as="h1" fontWeight='bold' fontSize='xl'>Dispensação de Medicamentos</Heading>
                   <FormControl w='250px'>
                     <Input
                       name='date'
@@ -389,8 +389,8 @@ const Dispensation = () => {
             Imprimir
           </Button>}
       >
-        <Flex w='100%' h='70px' p={2} alignItems='center' justify='center' bg='#808080' borderRadius={2}>
-          <Image src={LogoRemedioSolidario} alt="Logo Projeto Remédio" w='auto' h='50px' />
+        <Flex w='100%' h='70px' p={2} alignItems='center' justify='center' bg='#808080' borderRadius={2} aria-label='Logo Projeto Remédio' role='img'>
+          <Image src={LogoRemedioSolidario} alt="Logo Projeto Remédio" w='auto' h='50px' width='auto' height='50px' />
         </Flex>
         <Box>
           <Flex p={5} justify='center'>

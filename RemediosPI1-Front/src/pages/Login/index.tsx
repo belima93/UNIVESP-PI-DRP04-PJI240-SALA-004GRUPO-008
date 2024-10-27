@@ -1,7 +1,7 @@
 import Logo from '../../assets/logo.png'
 import Background from '../../assets/background-home.jpg'
 
-import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link } from '@chakra-ui/react'
+import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link, VisuallyHidden, Heading } from '@chakra-ui/react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
@@ -77,12 +77,17 @@ export default function Login() {
           borderRadius='md'
           boxShadow='md'
         >
+          <VisuallyHidden>
+            <Heading as="h1">Login</Heading>
+          </VisuallyHidden>
           <Image
             src={Logo}
-            alt='Imagem mãos com remédio'
+            alt='Logo Ecum Detailing'
             boxSize='80px'
             mb='8'
             margin='0 auto'
+            width='80px'
+            height='80px'
           />
 
           <Formik
@@ -101,7 +106,7 @@ export default function Login() {
                     name='email'
                     type='email'
                     autoComplete='username'
-                    placeholder='Digite seu e-mail'
+                    placeholder='Informe o usuário'
                     sx={{
                       '::placeholder': {
                         color: 'gray.800'
@@ -119,7 +124,7 @@ export default function Login() {
                     name='password'
                     type='password'
                     autoComplete='current-password'
-                    placeholder='Digite sua senha'
+                    placeholder='Digite a senha'
                     sx={{
                       '::placeholder': {
                         color: 'gray.800'

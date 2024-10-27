@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text } from '@chakra-ui/react'
 import { Footer, Header } from '../../components'
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
@@ -99,7 +99,7 @@ const Patient = () => {
         height='calc(100vh - 115px)'
         p={8}
       >
-        <Text fontWeight="bold" fontSize='xl'>Cadastro de Paciente</Text>
+        <Heading as="h1" fontWeight="bold" fontSize='xl'>Cadastro de Paciente</Heading>
 
         <Formik
           initialValues={initialValues}

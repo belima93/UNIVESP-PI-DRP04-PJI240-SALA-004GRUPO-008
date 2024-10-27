@@ -1,4 +1,4 @@
-import { Box, Text, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button, Flex, Tooltip, Input, FormControl, FormLabel } from '@chakra-ui/react'
+import { Box, Text, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button, Flex, Tooltip, Input, FormControl, FormLabel, Heading } from '@chakra-ui/react'
 import { Footer, Header, BaseModal, Pagination } from '../../components'
 import { MdOutlineEdit, MdDeleteOutline } from 'react-icons/md'
 import { api } from '../../services/api'
@@ -98,7 +98,7 @@ const PatientRegistration = () => {
     <>
       <Header />
       <Flex direction='column' height='calc(100vh - 115px)' p={8} >
-        <Text fontWeight="bold" fontSize='xl' mb={8}>Pacientes cadastrados</Text>
+        <Heading as="h1" fontWeight="bold" fontSize='xl' mb={8}>Pacientes cadastrados</Heading>
         <Box height="60vh" overflowY="auto" >
           <TableContainer>
             <Table variant='simple' colorScheme='blue'>
