@@ -1,7 +1,7 @@
 import Logo from '../../assets/logo.png'
 import Background from '../../assets/background-home.jpg'
 
-import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link } from '@chakra-ui/react'
+import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link, VisuallyHidden, Heading } from '@chakra-ui/react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
@@ -87,11 +87,20 @@ export default function Register() {
           boxShadow='md'
           position='relative'
         >
+          <VisuallyHidden>
+            <Heading as="h1">Criar Conta</Heading>
+          </VisuallyHidden>
           <Image
             src={Logo}
-            alt='Imagem mãos com remédio'
+            alt='Logo Ecum Detailing'
             boxSize='80px'
-            margin='0 auto'
+
+            position='absolute'
+            top='30px'
+            right='50px'
+            width='80px'
+            height='80px'
+
           />
 
           <Formik

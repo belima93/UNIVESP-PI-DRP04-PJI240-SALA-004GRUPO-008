@@ -12,11 +12,14 @@ const Header: React.FC<HeaderProps> = () => {
       height='65'
       p='5'
       bgColor='#808080'
+      role="img"
+      aria-label="Logo projeto Remédio Solidário"
     >
       <Image
         src={Logo}
         alt='Logo projeto Remédio Solidário'
         width='100px'
+        height='37px'
       />
     </Flex>
   )
