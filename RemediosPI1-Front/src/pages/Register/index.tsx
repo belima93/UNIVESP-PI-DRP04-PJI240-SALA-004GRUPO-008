@@ -5,49 +5,28 @@ import { Flex, Button, Image, FormControl, FormLabel, Input, Box, Text, Link, Vi
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
-import { Link as RouterLink } from 'react-router-dom'
-// import { api } from '../../services/api'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { api } from '../../services/api'
+import { AxiosError } from 'axios'
 
 interface FormData {
   id: number
   name: string
-  cpf: string
   email: string
   password: string
-  confirmPassword: string
-}
-
-const maskCPF = (value: string) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
-    .replace(/(-\d{2})\d+?$/, "$1")
-}
-
-const validateCPF = (cpf: string) => {
-  const regex = /^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}-?[0-9]{2}$/
-
-  if (!regex.test(cpf)) {
-    return false
-  }
-  return true
 }
 
 export default function Register() {
+  const navigate = useNavigate()
 
   const initialValues: FormData = {
     id: 0,
     name: '',
-    cpf: '',
     email: '',
     password: '',
-    confirmPassword: ''
   }
 
   const validationSchema = Yup.object({
-    cpf: Yup.string().required('CPF é obrigatório').test('cpf', 'CPF inválido', validateCPF),
     name: Yup.string().required('O nome é obrigatório').matches(/^[^\d]+$/, 'Nome não pode conter números'),
     email: Yup.string()
       .email('Digite um e-mail válido')
@@ -55,33 +34,38 @@ export default function Register() {
     password: Yup.string()
       .required('A senha é obrigatória')
       .min(6, 'A senha deve conter 6 digitos'),
-    confirmPassword: Yup.string()
-      .required('A confirmação da senha é obrigatória')
-      .oneOf([Yup.ref('password')], 'As senhas devem ser iguais')
   })
 
-  const handleSubmitLogin = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
-    console.log("Register", values)
-    toast.success('Usuário cadastrado com sucesso!')
-    resetForm()
-    // try {
-    //   const { status } = await api.post('login', values, {
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     }
-    //   })
+  const handleSubmitRegister = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
+    try {
+      const existingUser = await api.get(`cadastro?email=${values.email}`)
 
-    //   if (status === 201 || status === 200) {
-    //     toast.success('Usuário cadastrado com sucesso!')
-    //     resetForm()
-    //   }
-    //   if (status === 409) {
-    //     toast.error('Usuário já cadastrado')
-    //   }
+      if (existingUser.status === 200 && existingUser.data) {
+        toast.error('Usuário já cadastrado. Faça login.')
+        navigate('/')
+        return
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response && error.response.status === 404) {
+          try {
+            const { status } = await api.post('cadastro', values)
 
-    // } catch (err) {
-    //   toast.error('Falha no sistema! Tente novamente')
-    // }
+            console.log('RESPOSTA DA API', status)
+
+            if (status === 201 || status === 200) {
+              toast.success('Usuário cadastrado com sucesso!')
+              resetForm()
+              navigate('/')
+            }
+          } catch (err) {
+            toast.error('Erro ao cadastrar o usuário. Tente novamente.')
+          }
+        } else {
+          toast.error('Erro ao verificar o usuário. Tente novamente!')
+        }
+      }
+    }
   }
 
   return (
@@ -96,8 +80,7 @@ export default function Register() {
         bgRepeat='no-repeat'
       >
         <Box
-          h='620px'
-          w='40%'
+          boxSize='lg'
           bg='#247ba0'
           p='10'
           borderRadius='md'
@@ -111,45 +94,23 @@ export default function Register() {
             src={Logo}
             alt='Logo Ecum Detailing'
             boxSize='80px'
+
             position='absolute'
             top='30px'
             right='50px'
             width='80px'
             height='80px'
+
           />
 
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmitLogin}
+            onSubmit={handleSubmitRegister}
           >
-            {({ errors, setFieldValue, values, touched }) => (
+            {({ errors, touched }) => (
               <Form noValidate>
                 <Flex flexDirection='column' gap='35px'>
-
-                  <FormControl
-                    h='60px'>
-                    <FormLabel htmlFor='cpf' color='#FFF'>CPF</FormLabel>
-                    <Field
-                      as={Input}
-                      id='cpf'
-                      name='cpf'
-                      type='text'
-                      placeholder='Digite o CPF'
-                      sx={{
-                        '::placeholder': {
-                          color: 'gray.800'
-                        },
-                      }}
-                      width='40%'
-                      onChange={(e: { target: { value: string } }) => {
-                        const maskedCPF = maskCPF(e.target.value)
-                        setFieldValue('cpf', maskedCPF)
-                      }}
-                      value={values.cpf}                      
-                    />
-                    {errors.cpf && touched.cpf && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.cpf}</Text>}
-                  </FormControl>
 
                   <FormControl h='60px'>
                     <FormLabel htmlFor='name' color='#fff'>Nome</FormLabel>
@@ -207,25 +168,6 @@ export default function Register() {
                     {errors.password && touched.password && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.password}</Text>}
                   </FormControl>
 
-                  <FormControl
-                    h='60px'>
-                    <FormLabel htmlFor='confirmPassword' color='#fff'>Confirmar Senha</FormLabel>
-                    <Field
-                      as={Input}
-                      id='confirmPassword'
-                      name='confirmPassword'
-                      type='password'
-                      autoComplete='current-confirmPassword'
-                      placeholder='Digite sua senha novamente'
-                      sx={{
-                        '::placeholder': {
-                          color: 'gray.800'
-                        },
-                      }}
-                    />
-                    {errors.confirmPassword && touched.confirmPassword && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.confirmPassword}</Text>}
-                  </FormControl>
-
                   <Button
                     type='submit'
                     variant='outline'
@@ -248,7 +190,7 @@ export default function Register() {
                     bottom='30px'
                     right='45px'
                   >
-                    Já possuo cadastro! {}
+                    Já possuo cadastro! { }
                     <Link as={RouterLink} to="/" fontWeight="bold">
                       Entrar
                     </Link>

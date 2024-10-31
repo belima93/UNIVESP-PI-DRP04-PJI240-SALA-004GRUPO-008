@@ -11,7 +11,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 interface FormData {
-  email: string
+  login: string
   password: string
 }
 
@@ -20,14 +20,12 @@ export default function Login() {
   const navigate = useNavigate()
 
   const initialValues: FormData = {
-    email: '',
+    login: '',
     password: ''
   }
 
   const validationSchema = Yup.object({
-    email: Yup.string()
-      .email('Digite um e-mail válido')
-      .required('O e-mail é obrigatório'),
+    login: Yup.string().required('O login é obrigatório'),
     password: Yup.string()
       .required('A senha é obrigatória')
       .min(6, 'A senha deve conter 6 digitos')
@@ -37,11 +35,13 @@ export default function Login() {
   const handleSubmitLogin = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
     try {
       const { status, data } = await api.post('login', {
-        email: values.email,
+        login: values.login,
         password: values.password
       })
 
       putUserData(data)
+
+      console.log('login', data)
 
       if (status === 201 || status === 200) {
 
@@ -99,21 +99,23 @@ export default function Login() {
               <Form noValidate>
 
                 <FormControl h='60px'>
-                  <FormLabel htmlFor='email' color='#fff'>Login</FormLabel>
+                  <FormLabel htmlFor='login' color='#fff'>Login</FormLabel>
                   <Field
                     as={Input}
-                    id='email'
-                    name='email'
-                    type='email'
-                    autoComplete='username'
+                    id='login'
+                    name='login'
+                    type='login'
+                    autoComplete='username'               
+
                     placeholder='Informe o usuário'
+
                     sx={{
                       '::placeholder': {
                         color: 'gray.800'
                       },
                     }}
                   />
-                  {errors.email && touched.email && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.email}</Text>}
+                  {errors.login && touched.login && <Text color='#8f1515' fontSize={14} fontWeight='500' pl={1}>{errors.login}</Text>}
                 </FormControl>
 
                 <FormControl mt={10} h='60px'>
