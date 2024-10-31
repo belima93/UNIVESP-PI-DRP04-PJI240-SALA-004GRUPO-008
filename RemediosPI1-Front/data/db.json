@@ -1,5 +1,10 @@
 {
-  "login": [],
+  "login": [
+    {}
+  ],
+  "cadastro": [
+    {}
+  ],
   "paciente": [
     {
       "id": "2",

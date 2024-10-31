@@ -27,6 +27,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
       if (loginInfo) {
         setUserData(JSON.parse(loginInfo))
+        console.log('Dados do usuário carregados:', JSON.parse(loginInfo))
       }
     }
 
