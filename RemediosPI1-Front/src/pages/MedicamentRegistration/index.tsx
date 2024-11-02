@@ -1,4 +1,4 @@
-import { Box, Text, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button, Flex, Tooltip, Input, FormControl, FormLabel, Heading } from '@chakra-ui/react'
+import { Box, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button, Flex, Tooltip, Input, FormControl, FormLabel, Heading } from '@chakra-ui/react'
 import { Footer, Header, BaseModal, Pagination } from '../../components'
 import { MdOutlineEdit, MdDeleteOutline } from 'react-icons/md'
 import { api } from '../../services/api'
@@ -24,7 +24,7 @@ const MedicamentRegistration = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get('/api/medicamentos')
+        const response = await api.get('/medicamento')
         setMedicaments(response.data)
       } catch (error) {
         console.error('Erro ao buscar medicamentos:', error)
@@ -58,8 +58,8 @@ const MedicamentRegistration = () => {
 
   const handleDeleteMedicament = async (id: number) => {
     try {
-      await api.delete(`/api/medicamentos/${id}`)
-      setMedicaments(medicaments.filter(medicament => medicament.id !== id))      
+      await api.delete(`/medicamento/${id}`)
+      setMedicaments(medicaments.filter(medicament => medicament.id !== id))
     } catch (error) {
       console.error('Erro ao excluir paciente:', error)
     }
@@ -79,7 +79,7 @@ const MedicamentRegistration = () => {
   const handleSubmit = async () => {
     if (editedMedicament) {
       try {
-        await api.put(`/api/medicamentos/${editedMedicament.id}`, editedMedicament)
+        await api.put(`/medicamento/${editedMedicament.id}`, editedMedicament)
         setMedicaments(medicaments.map(medicament => (medicament.id === editedMedicament.id ? editedMedicament : medicament)))
         setIsEditModalOpen(false)
         setSelectedMedicament(null)
@@ -133,7 +133,7 @@ const MedicamentRegistration = () => {
             </Table>
           </TableContainer>
         </Box>
-   
+
         <Pagination
           currentPage={currentPage}
           totalPages={Math.ceil(medicaments.length / medicamentsPerPage)}

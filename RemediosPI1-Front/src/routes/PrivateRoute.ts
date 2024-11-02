@@ -12,8 +12,6 @@ function PrivateRoute({ element }: PrivateRouteProps) {
   useEffect(() => {
     const storedUser = localStorage.getItem('remediosolidario:userLogin')
 
-    console.log('User from localStorage:', storedUser)
-
     setUser(storedUser)
 
     if (!storedUser) {

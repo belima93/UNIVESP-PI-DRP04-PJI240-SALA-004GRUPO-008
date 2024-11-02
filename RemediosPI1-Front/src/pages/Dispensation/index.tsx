@@ -156,7 +156,6 @@ const Dispensation = () => {
   }
 
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
-    console.log('values', values)
     const { paciente } = values
     if (tableItems.length !== 0) {
       try {
@@ -165,8 +164,6 @@ const Dispensation = () => {
           paciente,
           medicamentos: tableItems
         }
-
-        console.log('POSTDATA', postData)
 
         const { status } = await api.post('/api/prescricoes', postData, {
           headers: {
@@ -210,15 +207,11 @@ const Dispensation = () => {
           validationSchema={validationSchema}
         >
           {({ values, setFieldValue, touched, errors }) => {
-            console.log('errors', errors)
-            console.log('values', values)
             return (
-
-
               <Form>
                 <Flex alignItems='center' justify='space-between'>
                   <Heading as="h1" fontWeight='bold' fontSize='xl'>Dispensação de Medicamentos</Heading>
-                  <FormControl w='250px'>
+                  <FormControl w='300px'>
                     <Input
                       name='date'
                       variant='unstyled'
@@ -238,7 +231,6 @@ const Dispensation = () => {
                     w='73%'
                     onChange={e => {
                       const paciente = patients.find(patient => patient.id === e.target.value)
-                      console.log('paciente', paciente, patients)
                       setFieldValue('paciente', paciente)
                     }}
                   >
@@ -268,7 +260,6 @@ const Dispensation = () => {
                       options={itemList.map(item => item.formula)}
                       onChange={(selectedOption: string) => {
                         const option = itemList.find((item) => item.formula === selectedOption)
-                        console.log('option', option)
                         setFieldValue('medicamento', option)
                         setInputValue(selectedOption)
                       }}
