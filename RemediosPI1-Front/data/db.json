@@ -8,7 +8,33 @@
       "password": "lua123"
     }
   ],
-  "paciente": [],
-  "medicamento": [],
+  "paciente": [
+    {
+      "id": "36b9",
+      "cpf": "541.457.444-77",
+      "nome": "Maria das Dores",
+      "rua": "Rua da Saudade",
+      "numero": "41",
+      "bairro": "Centro",
+      "complemento": "Casa",
+      "cidade": "Rio Pardo",
+      "uf": "SP",
+      "telefone": "(19) 52545-4585"
+    }
+  ],
+  "medicamento": [
+    {
+      "id": "072d",
+      "formula": "Dipirona",
+      "quantidade": 10,
+      "vencimento": "2024-11-20"
+    },
+    {
+      "id": "9c30",
+      "formula": "Sorine",
+      "quantidade": 44,
+      "vencimento": "2025-01-10"
+    }
+  ],
   "prescricao": []
 }

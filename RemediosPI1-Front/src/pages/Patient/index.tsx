@@ -6,7 +6,7 @@ import { api } from '../../services/api'
 import { toast } from 'react-toastify'
 
 interface FormData {
-  id: number
+  
   cpf: string
   nome: string
   rua: string
@@ -46,7 +46,7 @@ const validateCPF = (cpf: string) => {
 
 const Patient = () => {
   const initialValues: FormData = {
-    id: 0,
+   
     cpf: "",
     nome: "",
     rua: "",
