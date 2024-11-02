@@ -1,7 +1,7 @@
 import { Outlet, NavLink } from 'react-router-dom'
 import React, { useState } from 'react'
 import { IoIosArrowDown } from "react-icons/io"
-import { Box, Flex, Heading, Image, List, UnorderedList } from '@chakra-ui/react'
+import { Box, Flex, Image, List, UnorderedList } from '@chakra-ui/react'
 
 import { MenuItems } from '../../common/MenuItems'
 import Logo from '../../assets/logo.png'

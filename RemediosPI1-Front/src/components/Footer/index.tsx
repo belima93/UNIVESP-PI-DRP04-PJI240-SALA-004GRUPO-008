@@ -4,19 +4,19 @@ interface FooterProps { }
 
 const Footer: React.FC<FooterProps> = () => {
 
-    return (
-        <Flex
-            align='center'
-            justify='center'
-            height='50'
-            py='3'            
-            fontWeight='500'
-            color='#808080'   
-            borderTopWidth='2px'      
-            >
-            © {new Date().getFullYear()} - Remédio Solidário | Desenvolvido por DRP04-PJI110-SALA-006GRUPO-017
-        </Flex>
-    )
+  return (
+    <Flex
+      justify='center'
+      align='center'
+      height='50'
+      py='3'
+      fontWeight='500'
+      color='#808080'
+      borderTopWidth='2px'
+    >
+            © {new Date().getFullYear()} - Remédio Solidário | Desenvolvido por DRP04-PJI240-SALA-004GRUPO-008
+    </Flex>
+  )
 }
 
 export default Footer

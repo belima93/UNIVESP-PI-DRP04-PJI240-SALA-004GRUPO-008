@@ -6,7 +6,7 @@ import { api } from '../../services/api'
 import { toast } from 'react-toastify'
 
 interface FormData {
-  id: number
+
   formula: string
   quantidade: number
   vencimento: string
@@ -14,10 +14,10 @@ interface FormData {
 
 const Medicament = () => {
   const initialValues: FormData = {
-    id: 0,
-    formula: '',
+ 
+    formula: "",
     quantidade: 0,
-    vencimento: ''
+    vencimento: ""
   }
 
   const validationSchema = Yup.object({
@@ -29,7 +29,7 @@ const Medicament = () => {
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
 
     try {
-      const { status } = await api.post('/api/medicamentos', values, {
+      const { status } = await api.post('/medicamento', values, {
         headers: {
           'Content-Type': 'application/json'
         }
