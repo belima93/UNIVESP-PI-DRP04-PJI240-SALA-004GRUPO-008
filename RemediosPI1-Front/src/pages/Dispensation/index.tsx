@@ -97,7 +97,7 @@ const Dispensation = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await api.get('/api/pacientes')
+        const response = await api.get('/paciente')
         setPatients(response.data)
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error)
@@ -109,7 +109,7 @@ const Dispensation = () => {
   useEffect(() => {
     const fetchMedicaments = async () => {
       try {
-        const response = await api.get('/api/medicamentos')
+        const response = await api.get('/medicamento')
         setItemList(response.data)
       } catch (error) {
         console.error('Erro ao buscar medicamentos:', error)
@@ -165,7 +165,7 @@ const Dispensation = () => {
           medicamentos: tableItems
         }
 
-        const { status } = await api.post('/api/prescricoes', postData, {
+        const { status } = await api.post('/prescricao', postData, {
           headers: {
             'Content-Type': 'application/json'
           }
