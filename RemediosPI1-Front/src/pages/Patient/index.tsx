@@ -13,6 +13,7 @@ interface FormData {
   numero: string
   bairro: string
   complemento: string
+  cep: string
   cidade: string
   uf: string
   telefone: string
@@ -53,6 +54,7 @@ const Patient = () => {
     numero: "",
     bairro: "",
     complemento: "",
+    cep: "",
     cidade: "",
     uf: "",
     telefone: "",
@@ -65,6 +67,7 @@ const Patient = () => {
     numero: Yup.string().required('O número é obrigatório'),
     bairro: Yup.string().required('O bairro é obrigatório'),
     complemento: Yup.string(),
+    cep: Yup.string().matches(/^[0-9]{5}-?[0-9]{3}$/, 'CEP inválido'),
     cidade: Yup.string().required('A cidade é obrigatória'),
     uf: Yup.string().required('O estado é obrigatório'),
     telefone: Yup.string().required('O telefone é obrigatório').matches(/^\(\d{2}\) \d{4,5}-\d{4}$/, 'Telefone inválido'),
@@ -152,6 +155,15 @@ const Patient = () => {
 
               <FormControl mt={7}>
                 <FormLabel htmlFor='address' color='#808080'>Endereço do paciente</FormLabel>
+                <FormControl display='flex' alignItems='center' gap={15}>
+                  <FormControl w='350px' position='relative'>
+                    <Field as={Input} id='cep' name='cep' type='text' placeholder='CEP' />
+                    {errors.cep && touched.cep && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.cep}</Text>}
+                  </FormControl>
+                </FormControl>
+              </FormControl>
+              
+              <FormControl mt={7}>
                 <FormControl display='flex' alignItems='center' gap={15}>
                   <FormControl position='relative'>
                     <Field as={Input} id='rua' name='rua' type='text' placeholder='Informe o endereço completo' />

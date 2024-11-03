@@ -24,7 +24,13 @@ interface FormData {
   id: number
   cpf: string
   nome: string
-  endereco: string
+  rua: string
+  numero: string
+  bairro: string
+  complemento: string
+  cidade: string
+  uf: string
+  cep: string
 }
 
 const PatientRegistration = () => {
@@ -132,7 +138,7 @@ const PatientRegistration = () => {
                   <Tr key={patient.id}>
                     <Td w="10%">{patient.cpf}</Td>
                     <Td>{patient.nome}</Td>
-                    <Td>{patient.endereco}</Td>
+                    <Td>{patient.rua}</Td>
                     <Td>
                       <Flex justify={"end"}>
                         <Tooltip label="Editar" fontSize="md" placement="top">
@@ -203,11 +209,65 @@ const PatientRegistration = () => {
             />
           </FormControl>
           <FormControl>
+            <FormLabel mt={4}>CEP</FormLabel>
+            <Input
+              type="text"
+              name="cep"
+              value={editedPatient?.cep}
+              onChange={handleInputChange}
+            />
+          </FormControl>
+          <FormControl>
             <FormLabel mt={4}>Endereço</FormLabel>
             <Input
               type="text"
-              name="endereco"
-              value={editedPatient?.endereco}
+              name="rua"
+              value={editedPatient?.rua}
+              onChange={handleInputChange}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel mt={4}>Número</FormLabel>
+            <Input
+              type="text"
+              name="numero"
+              value={editedPatient?.numero}
+              onChange={handleInputChange}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel mt={4}>Bairro</FormLabel>
+            <Input
+              type="text"
+              name="bairro"
+              value={editedPatient?.bairro}
+              onChange={handleInputChange}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel mt={4}>Complemento</FormLabel>
+            <Input
+              type="text"
+              name="complemento"
+              value={editedPatient?.complemento}
+              onChange={handleInputChange}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel mt={4}>Cidade</FormLabel>
+            <Input
+              type="text"
+              name="cidade"
+              value={editedPatient?.cidade}
+              onChange={handleInputChange}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel mt={4}>UF</FormLabel>
+            <Input
+              type="text"
+              name="uf"
+              value={editedPatient?.uf}
               onChange={handleInputChange}
             />
           </FormControl>

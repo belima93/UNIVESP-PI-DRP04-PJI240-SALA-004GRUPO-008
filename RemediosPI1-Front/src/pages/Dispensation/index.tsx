@@ -24,7 +24,13 @@ interface FormPatients {
   id: string
   cpf: string
   nome: string
-  endereco: string
+  rua: string
+  numero: string
+  bairro: string
+  complemento: string
+  cidade: string
+  uf: string
+  cep: string
 }
 
 interface FormMedicaments {
@@ -38,14 +44,14 @@ interface ModalData {
   data: string
   paciente: FormPatients
   medicamentos: FormMedicaments[]
-  medicamentoList: FormMedicaments[]
+  medicamentoList: FormMedicaments[],
+  endereco: string
 }
 
 const validationSchema = Yup.object().shape({
   paciente: Yup.object().shape({
     id: Yup.string().required("Selecione um paciente"),
     cpf: Yup.string(),
-    endereco: Yup.string(),
     nome: Yup.string(),
   }).required("Selecione um paciente"),
   medicamento: Yup.object().shape({
@@ -53,8 +59,8 @@ const validationSchema = Yup.object().shape({
     formula: Yup.string(),
     quantidade: Yup.number().required("Selecione pelo menos um medicamento"),
     vencimento: Yup.string(),
-  }).required("Selecione pelo menos um medicamento")
-
+  }).required("Selecione pelo menos um medicamento"),
+  endereco: Yup.string(),
 })
 
 const Dispensation = () => {
@@ -77,7 +83,13 @@ const Dispensation = () => {
       id: '',
       cpf: '',
       nome: '',
-      endereco: ''
+      rua: '',
+      numero: '',
+      bairro: '',
+      complemento: '',
+      cidade: '',
+      uf: '',
+      cep: '',
     },
     medicamento: undefined,
     quantidade: 0
@@ -98,6 +110,7 @@ const Dispensation = () => {
     const fetchPatients = async () => {
       try {
         const response = await api.get('/paciente')
+        console.log('data patients: ',response.data)
         setPatients(response.data)
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error)
@@ -172,6 +185,7 @@ const Dispensation = () => {
         })
 
         if (status === 201 || status === 200) {
+          const endereco = `${postData.paciente.rua}, ${postData.paciente.numero} - ${postData.paciente.bairro}, ${postData.paciente.cidade} - ${postData.paciente.uf}, ${postData.paciente.cep}`
 
           setPatients([])
 
@@ -181,8 +195,10 @@ const Dispensation = () => {
           setIsEditModalOpen(true)
           setModalData({
             ...postData,
-            medicamentoList: postData.medicamentos
+            medicamentoList: postData.medicamentos,
+            endereco: endereco
           })
+          
         }
         if (status === 409) {
           toast.error('Envie novamente')
@@ -413,7 +429,7 @@ const Dispensation = () => {
             <Flex>
               <FormControl display='flex' alignItems='center'>
                 <FormLabel mb={0}>ENDEREÇO:</FormLabel>
-                <Input w='800px' type="text" name="endereco" value={modalData?.paciente.endereco} variant='unstyled' isReadOnly />
+                <Input w='800px' type="text" name="endereco" value={modalData?.endereco} variant='unstyled' isReadOnly />
               </FormControl>
             </Flex>
           </Box>
