@@ -19,13 +19,13 @@ public class LoginController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<String>login(@RequestBody UsuarioModel usuarioModel) {
-        Optional<UsuarioModel> usuario = usuarioService.autenticar(usuarioModel.getNomeUsuario(), usuarioModel.getSenha());
+    public ResponseEntity<UsuarioModel>login(@RequestBody UsuarioModel usuarioModel) {
+        Optional<UsuarioModel> usuario = usuarioService.autenticar(usuarioModel.getEmail(), usuarioModel.getSenha());
 
         if (usuario.isPresent()) {
-            return ResponseEntity.ok("Login bem-sucedido!");
+            return ResponseEntity.status(200).body(usuario.get());
         } else {
-            return ResponseEntity.status(401).body("Credenciais inválidas");
+            return ResponseEntity.status(401).body(null);
         }
     }
 }

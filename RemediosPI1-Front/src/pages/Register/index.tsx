@@ -21,28 +21,28 @@ import { Link as RouterLink, useNavigate } from "react-router-dom"
 import { api } from "../../services/api"
 
 interface FormData {
-  name: string
+  nomeUsuario: string
   email: string
-  password: string
+  senha: string
 }
 
 export default function Register() {
   const navigate = useNavigate()
 
   const initialValues: FormData = {
-    name: "",
+    nomeUsuario: "",
     email: "",
-    password: "",
+    senha: "",
   }
 
   const validationSchema = Yup.object({
-    name: Yup.string()
+    nomeUsuario: Yup.string()
       .required("O nome é obrigatório")
       .matches(/^[^\d]+$/, "Nome não pode conter números"),
     email: Yup.string()
       .email("Digite um e-mail válido")
       .required("O e-mail é obrigatório"),
-    password: Yup.string()
+    senha: Yup.string()
       .required("A senha é obrigatória")
       .min(6, "A senha deve conter 6 digitos"),
   })
@@ -51,17 +51,21 @@ export default function Register() {
     values: FormData,
     { resetForm }: FormikHelpers<FormData>
   ) => {
-    try {
-      const existingUserResponse = await api.get(
-        `/cadastro?email=${values.email}`
-      )
+    try {    
+      
+      const { status,data } = await api.post("usuarios", values).then((response) => {
+        return response
+      }).catch((error) => {
+        console.log(error)
+        return error.response
+      })
+      console.log(status)
 
-      if (existingUserResponse.data.length > 0) {
-        toast.error("E-mail já cadastrado. Por favor, utilize outro.")
-        return
-      }
+      if (data === 'Nome de usuário já existe!')
+        toast.error("Nome de usuário já existe!")
 
-      const { status } = await api.post("cadastro", values)
+
+      
 
       if (status === 201 || status === 200) {
         toast.success("Usuário cadastrado com sucesso!")
@@ -117,8 +121,8 @@ export default function Register() {
                     </FormLabel>
                     <Field
                       as={Input}
-                      id="name"
-                      name="name"
+                      id="nomeUsuario"
+                      name="nomeUsuario"
                       type="text"
                       autoComplete="current-name"
                       placeholder="Digite seu nome"
@@ -128,14 +132,14 @@ export default function Register() {
                         },
                       }}
                     />
-                    {errors.name && touched.name && (
+                    {errors.nomeUsuario && touched.nomeUsuario && (
                       <Text
                         color="#8f1515"
                         fontSize={14}
                         fontWeight="500"
                         pl={1}
                       >
-                        {errors.name}
+                        {errors.nomeUsuario}
                       </Text>
                     )}
                   </FormControl>
@@ -175,8 +179,8 @@ export default function Register() {
                     </FormLabel>
                     <Field
                       as={Input}
-                      id="password"
-                      name="password"
+                      id="senha"
+                      name="senha"
                       type="password"
                       autoComplete="current-password"
                       placeholder="Digite sua senha"
@@ -186,14 +190,14 @@ export default function Register() {
                         },
                       }}
                     />
-                    {errors.password && touched.password && (
+                    {errors.senha && touched.senha && (
                       <Text
                         color="#8f1515"
                         fontSize={14}
                         fontWeight="500"
                         pl={1}
                       >
-                        {errors.password}
+                        {errors.senha}
                       </Text>
                     )}
                   </FormControl>

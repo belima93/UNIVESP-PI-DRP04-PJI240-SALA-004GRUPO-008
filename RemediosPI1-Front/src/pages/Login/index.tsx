@@ -23,8 +23,8 @@ import { Link as RouterLink } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 
 interface FormData {
-  login: string
-  password: string
+  email: string
+  senha: string
 }
 
 export default function Login() {
@@ -32,13 +32,13 @@ export default function Login() {
   const navigate = useNavigate()
 
   const initialValues: FormData = {
-    login: "",
-    password: "",
+    email: "",
+    senha: "",
   }
 
   const validationSchema = Yup.object({
-    login: Yup.string().required("O login é obrigatório"),
-    password: Yup.string()
+    email: Yup.string().required("O login é obrigatório"),
+    senha: Yup.string()
       .required("A senha é obrigatória")
       .min(6, "A senha deve conter 6 digitos"),
   })
@@ -48,31 +48,32 @@ export default function Login() {
     { resetForm }: FormikHelpers<FormData>
   ) => {
     try {
-      const response = await api.get(`cadastro?email=${values.login}`)
+     
+      const response = await api.post(`login`,values)
+      debugger
+      
+      if (response.status == 200) {
+        toast.success("Seja bem-vindo(a)!")
 
-      if (response.data.length === 0) {
+        const user = response.data      
+
+        putUserData(user)
+
+        setTimeout(() => {
+          localStorage.setItem(
+            "remediosolidario:userLogin",
+            JSON.stringify(user)
+          )
+          resetForm()
+          navigate("/home/paciente")
+        }, 1500)
+      }
+
+      else{
         toast.error("Usuário não encontrado!")
         return
       }
 
-      const user = response.data[0]
-
-      if (user.password !== values.password) {
-        toast.error("Senha incorreta!")
-        return
-      }
-
-      putUserData(user)
-      toast.success("Seja bem-vindo(a)!")
-
-      setTimeout(() => {
-        localStorage.setItem(
-          "remediosolidario:userLogin",
-          JSON.stringify(user)
-        )
-        resetForm()
-        navigate("/home/paciente")
-      }, 1500)
     } catch (err) {
       toast.error("Falha no sistema! Tente novamente")
     }
@@ -116,8 +117,8 @@ export default function Login() {
                   </FormLabel>
                   <Field
                     as={Input}
-                    id="login"
-                    name="login"
+                    id="email"
+                    name="email"
                     type="login"
                     autoComplete="username"
                     placeholder="Digite o e-mail cadastrado"
@@ -127,9 +128,9 @@ export default function Login() {
                       },
                     }}
                   />
-                  {errors.login && touched.login && (
+                  {errors.email && touched.email && (
                     <Text color="#8f1515" fontSize={14} fontWeight="500" pl={1}>
-                      {errors.login}
+                      {errors.email}
                     </Text>
                   )}
                 </FormControl>
@@ -140,8 +141,8 @@ export default function Login() {
                   </FormLabel>
                   <Field
                     as={Input}
-                    id="password"
-                    name="password"
+                    id="senha"
+                    name="senha"
                     type="password"
                     autoComplete="current-password"
                     placeholder="Digite a senha"
@@ -151,9 +152,9 @@ export default function Login() {
                       },
                     }}
                   />
-                  {errors.password && touched.password && (
+                  {errors.senha && touched.senha && (
                     <Text color="#8f1515" fontSize={14} fontWeight="500" pl={1}>
-                      {errors.password}
+                      {errors.senha}
                     </Text>
                   )}
                 </FormControl>
