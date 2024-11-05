@@ -15,9 +15,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public Optional<UsuarioModel> autenticar(String nomeUsuario, String senha) {
+    public Optional<UsuarioModel> autenticar(String email, String senha) {
 
-        Optional<UsuarioModel> usuario = usuarioRepository.findByNomeUsuario(nomeUsuario);
+        Optional<UsuarioModel> usuario = usuarioRepository.findByEmail(email);
 
         if (usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
             return usuario;
@@ -28,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioModel salvarUsuario(UsuarioModel usuario) {
-        Optional<UsuarioModel> usuarioExistente = usuarioRepository.findByNomeUsuario(usuario.getNomeUsuario());
+        Optional<UsuarioModel> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
 
         if (usuarioExistente.isPresent()) {
             throw new IllegalArgumentException("Nome de usuário já existe!");

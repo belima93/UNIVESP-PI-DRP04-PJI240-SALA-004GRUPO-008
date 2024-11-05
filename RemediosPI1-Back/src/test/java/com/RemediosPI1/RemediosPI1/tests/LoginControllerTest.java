@@ -40,7 +40,7 @@ public class LoginControllerTest {
 
     @Test
     public void testLoginComSucesso() throws Exception {
-        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "senha123");
+        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "usuario@gmail.com", "senha123");
 
         when(usuarioService.autenticar(anyString(), anyString())).thenReturn(Optional.of(usuario));
 

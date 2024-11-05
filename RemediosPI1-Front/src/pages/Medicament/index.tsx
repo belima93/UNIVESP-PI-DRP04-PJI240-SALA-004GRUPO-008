@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text } from '@chakra-ui/react'
 import { Footer, Header } from '../../components'
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
@@ -6,7 +6,7 @@ import { api } from '../../services/api'
 import { toast } from 'react-toastify'
 
 interface FormData {
-  id: number
+
   formula: string
   quantidade: number
   vencimento: string
@@ -14,10 +14,10 @@ interface FormData {
 
 const Medicament = () => {
   const initialValues: FormData = {
-    id: 0,
-    formula: '',
+ 
+    formula: "",
     quantidade: 0,
-    vencimento: ''
+    vencimento: ""
   }
 
   const validationSchema = Yup.object({
@@ -27,9 +27,9 @@ const Medicament = () => {
   })
 
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
- 
+
     try {
-      const { status } = await api.post('/api/medicamentos', values, {
+      const { status } = await api.post('/medicamento', values, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -55,7 +55,7 @@ const Medicament = () => {
         height='calc(100vh - 115px)'
         p={8}
       >
-        <Text fontWeight="bold" fontSize='xl'>Cadastro de Medicamentos</Text>
+        <Heading as="h1" fontWeight="bold" fontSize='xl'>Cadastro de Medicamentos</Heading>
 
         <Formik
           initialValues={initialValues}
@@ -72,20 +72,19 @@ const Medicament = () => {
                   name='formula'
                   type='text'
                   placeholder='Digite o nome do medicamento'
-                  autoFocus
                 />
                 {errors.formula && touched.formula && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.formula}</Text>}
               </FormControl>
 
               <FormControl mt={7} h='80px'>
                 <FormLabel htmlFor='quantidade' color='#808080'>Quantidade</FormLabel>
-                <Field as={Input} id='quantidade' name='quantidade' type='number' placeholder='Digite a quantidade' width='30%'/>
+                <Field as={Input} id='quantidade' name='quantidade' type='number' placeholder='Digite a quantidade' width='30%' />
                 {errors.quantidade && touched.quantidade && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.quantidade}</Text>}
               </FormControl>
 
               <FormControl mt={7} h='80px'>
                 <FormLabel htmlFor='vencimento' color='#808080'>Data do vencimento</FormLabel>
-                <Field as={Input} id='vencimento' name='vencimento' type='date' width='30%'/>
+                <Field as={Input} id='vencimento' name='vencimento' type='date' width='30%' />
                 {errors.vencimento && touched.vencimento && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1}>{errors.vencimento}</Text>}
               </FormControl>
 

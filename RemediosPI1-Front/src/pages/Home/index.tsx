@@ -37,8 +37,8 @@ const Home: React.FC<HomeProps> = () => {
         transition="width 0.2s ease"
       >
         <Flex height="90%" justifyContent="start" flexDirection="column">
-          <Flex align="center" justify="center" m={menuHidden ? '2' : '5'}>
-            <Image src={Logo} alt="Logo Ecum Detailing" width="70px" />
+          <Flex align="center" justify="center" m={menuHidden ? '2' : '5'} role='img' aria-label='Logo Ecum Detailing'>
+            <Image src={Logo} alt="Logo Ecum Detailing" width="70px" height="70px" h='auto' w='70px' />
           </Flex>
 
           <Flex mt={10}>
@@ -100,8 +100,8 @@ const Home: React.FC<HomeProps> = () => {
         </Flex>
             
         <Box ml={3}>
-          <button onClick={() => { changeBoxWidth() }}>
-            <Image src={HideMenu} alt="Ocultar menu lateral" width="25px" />
+          <button onClick={() => { changeBoxWidth() }} aria-label='Ocultar menu lateral'>
+            <Image src={HideMenu} alt="Ocultar menu lateral" width="25px" height="25px" />
           </button>
         </Box>
       </Box>

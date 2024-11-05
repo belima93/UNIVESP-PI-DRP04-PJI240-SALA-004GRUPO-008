@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text } from '@chakra-ui/react'
 import { Footer, Header } from '../../components'
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
@@ -6,16 +6,17 @@ import { api } from '../../services/api'
 import { toast } from 'react-toastify'
 
 interface FormData {
-  id: number
+  
   cpf: string
   nome: string
   rua: string
   numero: string
   bairro: string
   complemento: string
+  cep: string
   cidade: string
-  uf: string,
-  telefone: string,
+  uf: string
+  telefone: string
 }
 
 const maskCPF = (value: string) => {
@@ -46,16 +47,17 @@ const validateCPF = (cpf: string) => {
 
 const Patient = () => {
   const initialValues: FormData = {
-    id: 0,
-    cpf: '',
-    nome: '',
-    rua: '',
-    numero: '',
-    bairro: '',
-    complemento: '',
-    cidade: '',
-    uf: '',
-    telefone: '',
+   
+    cpf: "",
+    nome: "",
+    rua: "",
+    numero: "",
+    bairro: "",
+    complemento: "",
+    cep: "",
+    cidade: "",
+    uf: "",
+    telefone: "",
   }
 
   const validationSchema = Yup.object({
@@ -65,15 +67,16 @@ const Patient = () => {
     numero: Yup.string().required('O número é obrigatório'),
     bairro: Yup.string().required('O bairro é obrigatório'),
     complemento: Yup.string(),
+    cep: Yup.string().matches(/^[0-9]{5}-?[0-9]{3}$/, 'CEP inválido'),
     cidade: Yup.string().required('A cidade é obrigatória'),
     uf: Yup.string().required('O estado é obrigatório'),
-    telefone: Yup.string().required('O telefone é obrigatório').matches(/^\(\d{2}\) \d{4,5}-\d{4}$/,'Telefone inválido'),
+    telefone: Yup.string().required('O telefone é obrigatório').matches(/^\(\d{2}\) \d{4,5}-\d{4}$/, 'Telefone inválido'),
   })
 
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
 
     try {
-      const { status } = await api.post('/api/pacientes', values, {
+      const { status } = await api.post('/paciente', values, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -99,7 +102,7 @@ const Patient = () => {
         height='calc(100vh - 115px)'
         p={8}
       >
-        <Text fontWeight="bold" fontSize='xl'>Cadastro de Paciente</Text>
+        <Heading as="h1" fontWeight="bold" fontSize='xl'>Cadastro de Paciente</Heading>
 
         <Formik
           initialValues={initialValues}
@@ -122,7 +125,6 @@ const Patient = () => {
                     setFieldValue('cpf', maskedCPF)
                   }}
                   value={values.cpf}
-                  autoFocus
                 />
                 {errors.cpf && touched.cpf && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.cpf}</Text>}
               </FormControl>
@@ -135,17 +137,17 @@ const Patient = () => {
                 </FormControl>
                 <FormControl position='relative'>
                   <FormLabel htmlFor='telefone' color='#808080'>Telefone do paciente</FormLabel>
-                  <Field 
-                    as={Input} 
-                    id='telefone' 
-                    name='telefone' 
-                    type='text' 
+                  <Field
+                    as={Input}
+                    id='telefone'
+                    name='telefone'
+                    type='text'
                     placeholder='Informe o telefone'
-                    onChange={(e: { target: { value: string } }) => {      
+                    onChange={(e: { target: { value: string } }) => {
                       const maskedPhone = maskPhone(e.target.value)
                       setFieldValue('telefone', maskedPhone)
                     }}
-                    value={values.telefone} 
+                    value={values.telefone}
                   />
                   {errors.telefone && touched.telefone && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.telefone}</Text>}
                 </FormControl>
@@ -153,6 +155,15 @@ const Patient = () => {
 
               <FormControl mt={7}>
                 <FormLabel htmlFor='address' color='#808080'>Endereço do paciente</FormLabel>
+                <FormControl display='flex' alignItems='center' gap={15}>
+                  <FormControl w='350px' position='relative'>
+                    <Field as={Input} id='cep' name='cep' type='text' placeholder='CEP' />
+                    {errors.cep && touched.cep && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.cep}</Text>}
+                  </FormControl>
+                </FormControl>
+              </FormControl>
+              
+              <FormControl mt={7}>
                 <FormControl display='flex' alignItems='center' gap={15}>
                   <FormControl position='relative'>
                     <Field as={Input} id='rua' name='rua' type='text' placeholder='Informe o endereço completo' />

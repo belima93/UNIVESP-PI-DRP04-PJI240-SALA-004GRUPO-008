@@ -2,7 +2,7 @@ import {
   Box, Flex, FormControl, FormLabel, Input,
   Select, Text, Table, Thead, Tbody, Tr, Th, Td,
   TableContainer, Button, Tooltip, OrderedList, ListItem,
-  Image
+  Image, Heading
 } from '@chakra-ui/react'
 import { Formik, Form, FormikHelpers, Field } from 'formik'
 import { Footer, Header, MultSelect, BaseModal } from '../../components'
@@ -24,7 +24,13 @@ interface FormPatients {
   id: string
   cpf: string
   nome: string
-  endereco: string
+  rua: string
+  numero: string
+  bairro: string
+  complemento: string
+  cidade: string
+  uf: string
+  cep: string
 }
 
 interface FormMedicaments {
@@ -38,14 +44,14 @@ interface ModalData {
   data: string
   paciente: FormPatients
   medicamentos: FormMedicaments[]
-  medicamentoList: FormMedicaments[]
+  medicamentoList: FormMedicaments[],
+  endereco: string
 }
 
 const validationSchema = Yup.object().shape({
   paciente: Yup.object().shape({
     id: Yup.string().required("Selecione um paciente"),
     cpf: Yup.string(),
-    endereco: Yup.string(),
     nome: Yup.string(),
   }).required("Selecione um paciente"),
   medicamento: Yup.object().shape({
@@ -53,8 +59,8 @@ const validationSchema = Yup.object().shape({
     formula: Yup.string(),
     quantidade: Yup.number().required("Selecione pelo menos um medicamento"),
     vencimento: Yup.string(),
-  }).required("Selecione pelo menos um medicamento") 
-
+  }).required("Selecione pelo menos um medicamento"),
+  endereco: Yup.string(),
 })
 
 const Dispensation = () => {
@@ -77,7 +83,13 @@ const Dispensation = () => {
       id: '',
       cpf: '',
       nome: '',
-      endereco: ''
+      rua: '',
+      numero: '',
+      bairro: '',
+      complemento: '',
+      cidade: '',
+      uf: '',
+      cep: '',
     },
     medicamento: undefined,
     quantidade: 0
@@ -97,7 +109,8 @@ const Dispensation = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await api.get('/api/pacientes')
+        const response = await api.get('/paciente')
+        console.log('data patients: ',response.data)
         setPatients(response.data)
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error)
@@ -109,7 +122,7 @@ const Dispensation = () => {
   useEffect(() => {
     const fetchMedicaments = async () => {
       try {
-        const response = await api.get('/api/medicamentos')
+        const response = await api.get('/medicamento')
         setItemList(response.data)
       } catch (error) {
         console.error('Erro ao buscar medicamentos:', error)
@@ -156,7 +169,6 @@ const Dispensation = () => {
   }
 
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
-    console.log('values', values)
     const { paciente } = values
     if (tableItems.length !== 0) {
       try {
@@ -166,15 +178,14 @@ const Dispensation = () => {
           medicamentos: tableItems
         }
 
-        console.log('POSTDATA', postData)
-
-        const { status } = await api.post('/api/prescricoes', postData, {
+        const { status } = await api.post('/prescricao', postData, {
           headers: {
             'Content-Type': 'application/json'
           }
         })
 
         if (status === 201 || status === 200) {
+          const endereco = `${postData.paciente.rua}, ${postData.paciente.numero} - ${postData.paciente.bairro}, ${postData.paciente.cidade} - ${postData.paciente.uf}, ${postData.paciente.cep}`
 
           setPatients([])
 
@@ -184,8 +195,10 @@ const Dispensation = () => {
           setIsEditModalOpen(true)
           setModalData({
             ...postData,
-            medicamentoList: postData.medicamentos
+            medicamentoList: postData.medicamentos,
+            endereco: endereco
           })
+          
         }
         if (status === 409) {
           toast.error('Envie novamente')
@@ -210,15 +223,11 @@ const Dispensation = () => {
           validationSchema={validationSchema}
         >
           {({ values, setFieldValue, touched, errors }) => {
-            console.log('errors', errors)
-            console.log('values', values)
             return (
-
-
               <Form>
                 <Flex alignItems='center' justify='space-between'>
-                  <Text fontWeight='bold' fontSize='xl'>Dispensação de Medicamentos</Text>
-                  <FormControl w='250px'>
+                  <Heading as="h1" fontWeight='bold' fontSize='xl'>Dispensação de Medicamentos</Heading>
+                  <FormControl w='300px'>
                     <Input
                       name='date'
                       variant='unstyled'
@@ -236,10 +245,8 @@ const Dispensation = () => {
                     name='paciente'
                     placeholder='Selecione o nome do paciente'
                     w='73%'
-                    autoFocus
                     onChange={e => {
                       const paciente = patients.find(patient => patient.id === e.target.value)
-                      console.log('paciente', paciente, patients)
                       setFieldValue('paciente', paciente)
                     }}
                   >
@@ -269,7 +276,6 @@ const Dispensation = () => {
                       options={itemList.map(item => item.formula)}
                       onChange={(selectedOption: string) => {
                         const option = itemList.find((item) => item.formula === selectedOption)
-                        console.log('option', option)
                         setFieldValue('medicamento', option)
                         setInputValue(selectedOption)
                       }}
@@ -295,7 +301,7 @@ const Dispensation = () => {
                       type="number"
                       name="quantidade"
                       placeholder="Quantidade"
-                      value={values.quantidade || ''}                      
+                      value={values.quantidade || ''}
                     />
                     {message !== '' && (
                       <Text
@@ -315,7 +321,7 @@ const Dispensation = () => {
                       name="adicionar"
                       type='button'
                       onClick={(e) => {
-                        if(values.quantidade === 0) setMessage("Selecione a quantidade do medicamento")
+                        if (values.quantidade === 0) setMessage("Selecione a quantidade do medicamento")
                         if (values.medicamento && values.quantidade !== 0) {
 
                           handleAddMedicaments({ ...values.medicamento, quantidade: values.quantidade }, e)
@@ -390,8 +396,8 @@ const Dispensation = () => {
             Imprimir
           </Button>}
       >
-        <Flex w='100%' h='70px' p={2} alignItems='center' justify='center' bg='#808080' borderRadius={2}>
-          <Image src={LogoRemedioSolidario} alt="Logo Projeto Remédio" w='auto' h='50px' />
+        <Flex w='100%' h='70px' p={2} alignItems='center' justify='center' bg='#808080' borderRadius={2} aria-label='Logo Projeto Remédio' role='img'>
+          <Image src={LogoRemedioSolidario} alt="Logo Projeto Remédio" w='auto' h='50px' width='auto' height='50px' />
         </Flex>
         <Box>
           <Flex p={5} justify='center'>
@@ -423,7 +429,7 @@ const Dispensation = () => {
             <Flex>
               <FormControl display='flex' alignItems='center'>
                 <FormLabel mb={0}>ENDEREÇO:</FormLabel>
-                <Input w='800px' type="text" name="endereco" value={modalData?.paciente.endereco} variant='unstyled' isReadOnly />
+                <Input w='800px' type="text" name="endereco" value={modalData?.endereco} variant='unstyled' isReadOnly />
               </FormControl>
             </Flex>
           </Box>

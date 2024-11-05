@@ -27,10 +27,11 @@ public class UsuarioModelTest {
 
     @Test
     public void testUsuarioModelAllArgsConstructor() {
-        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste", "senha123");
+        UsuarioModel usuario = new UsuarioModel(1L, "usuario_teste","usuario@gmail.com", "senha123");
 
         assertEquals(1L, usuario.getId());
         assertEquals("usuario_teste", usuario.getNomeUsuario());
+        assertEquals("usuario@gmail.com", usuario.getEmail());
         assertEquals("senha123", usuario.getSenha());
     }
 
@@ -40,6 +41,7 @@ public class UsuarioModelTest {
 
         assertNull(usuario.getId());
         assertNull(usuario.getNomeUsuario());
+        assertNull(usuario.getEmail());
         assertNull(usuario.getSenha());
     }
 }
