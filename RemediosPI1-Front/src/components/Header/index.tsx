@@ -14,6 +14,7 @@ const Header: React.FC<HeaderProps> = () => {
       bgColor='#808080'
       role="img"
       aria-label="Logo projeto Remédio Solidário"
+      data-testid="header"
     >
       <Image
         src={Logo}
