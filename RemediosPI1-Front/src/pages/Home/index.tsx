@@ -42,7 +42,7 @@ const Home: React.FC<HomeProps> = () => {
           </Flex>
 
           <Flex mt={10}>
-            <UnorderedList ml={menuHidden ? 2 : 3} transition="width 0.2s ease">
+            <UnorderedList ml={menuHidden ? 2 : 3} transition="width 0.2s ease" data-testid="asideMenu">
               {MenuItems.map((menu, index) => (
                 <React.Fragment key={index}>
                   <Flex
