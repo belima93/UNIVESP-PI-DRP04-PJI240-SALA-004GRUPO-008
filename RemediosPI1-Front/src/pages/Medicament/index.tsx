@@ -14,7 +14,6 @@ interface FormData {
 
 const Medicament = () => {
   const initialValues: FormData = {
- 
     formula: "",
     quantidade: 0,
     vencimento: ""

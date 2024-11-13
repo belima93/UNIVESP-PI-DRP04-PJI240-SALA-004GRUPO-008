@@ -112,7 +112,7 @@ export default function Login() {
             {({ errors, touched }) => (
               <Form noValidate>
                 <FormControl h="60px">
-                  <FormLabel htmlFor="login" color="#fff">
+                  <FormLabel htmlFor="email" aria-labelledby="email" color="#fff">
                     Login
                   </FormLabel>
                   <Field
@@ -136,7 +136,7 @@ export default function Login() {
                 </FormControl>
 
                 <FormControl mt={10} h="60px">
-                  <FormLabel htmlFor="password" color="#fff">
+                  <FormLabel htmlFor="senha" aria-labelledby="senha" color="#fff" >
                     Senha
                   </FormLabel>
                   <Field
