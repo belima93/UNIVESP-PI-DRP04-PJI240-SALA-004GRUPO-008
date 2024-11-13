@@ -24,7 +24,7 @@ const MedicamentRegistration = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get('/medicamento')
+        const response = await api.get('/medicamentos')
         setMedicaments(response.data)
       } catch (error) {
         console.error('Erro ao buscar medicamentos:', error)
@@ -58,7 +58,7 @@ const MedicamentRegistration = () => {
 
   const handleDeleteMedicament = async (id: number) => {
     try {
-      await api.delete(`/medicamento/${id}`)
+      await api.delete(`/medicamentos/${id}`)
       setMedicaments(medicaments.filter(medicament => medicament.id !== id))
     } catch (error) {
       console.error('Erro ao excluir paciente:', error)
@@ -79,7 +79,7 @@ const MedicamentRegistration = () => {
   const handleSubmit = async () => {
     if (editedMedicament) {
       try {
-        await api.put(`/medicamento/${editedMedicament.id}`, editedMedicament)
+        await api.put(`/medicamentos/${editedMedicament.id}`, editedMedicament)
         setMedicaments(medicaments.map(medicament => (medicament.id === editedMedicament.id ? editedMedicament : medicament)))
         setIsEditModalOpen(false)
         setSelectedMedicament(null)

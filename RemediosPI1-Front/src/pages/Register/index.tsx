@@ -116,7 +116,7 @@ export default function Register() {
               <Form noValidate>
                 <Flex flexDirection="column" gap="35px">
                   <FormControl h="60px">
-                    <FormLabel htmlFor="name" color="#fff">
+                    <FormLabel htmlFor="nomeUsuario" aria-labelledby="nomeUsuario" color="#fff">
                       Nome
                     </FormLabel>
                     <Field
@@ -145,7 +145,7 @@ export default function Register() {
                   </FormControl>
 
                   <FormControl h="60px">
-                    <FormLabel htmlFor="email" color="#fff">
+                    <FormLabel htmlFor="email" aria-labelledby="email" color="#fff">
                       E-mail
                     </FormLabel>
                     <Field
@@ -174,7 +174,7 @@ export default function Register() {
                   </FormControl>
 
                   <FormControl h="60px">
-                    <FormLabel htmlFor="password" color="#fff">
+                    <FormLabel htmlFor="senha" aria-labelledby="senha"  color="#fff">
                       Senha
                     </FormLabel>
                     <Field

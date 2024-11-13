@@ -44,7 +44,7 @@ const PatientRegistration = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("/paciente")
+        const response = await api.get("/pacientes")
         setPatients(response.data)
       } catch (error) {
         console.error("Erro ao buscar pacientes:", error)
@@ -78,7 +78,7 @@ const PatientRegistration = () => {
 
   const handleDeletePatient: (id: number) => void = async (id: number) => {
     try {
-      await api.delete(`/paciente/${id}`)
+      await api.delete(`/pacientes/${id}`)
       setPatients(patients.filter((patient) => patient.id !== id))
     } catch (error) {
       console.error("Erro ao excluir paciente:", error)
@@ -99,7 +99,7 @@ const PatientRegistration = () => {
   const handleSubmit = async () => {
     if (editedPatient) {
       try {
-        await api.put(`/paciente/${editedPatient.id}`, editedPatient)
+        await api.put(`/pacientes/${editedPatient.id}`, editedPatient)
         setPatients(
           patients.map((patient) =>
             patient.id === editedPatient.id ? editedPatient : patient
