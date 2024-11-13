@@ -31,3 +31,18 @@ Integrantes do Grupo:
 
 
 __________________________________________________________________________
+
+## Arquitetura
+
+<img src="img/Arquitetura Framework 3.png" alt="Arquitetura" width="800">
+
+<p> 1 - O usuário inicia a interação com a aplicação através de uma interface de login. Neste momento, ocorre a validação das credenciais e a autorização para o uso dos recursos da aplicação. Este processo é fundamental para garantir a segurança e integridade dos dados.</p>
+<p> 2 - O NGINX atua como um servidor web reverso, responsável por distribuir o tráfego de rede de forma eficiente e segura para o backend hospedado na instância EC2. Ele melhora o desempenho da aplicação ao servir conteúdos estáticos rapidamente, além de ser capaz de balancear carga e fornecer caching. </p>
+<p> 3 - Para otimizar a entrega de conteúdo, é utilizado um CDN (Content Delivery Network), que faz cache dos arquivos estáticos, como imagens, CSS e JavaScript. O uso de CDN melhora significativamente a performance ao reduzir o tempo de resposta para o usuário final, uma vez que os arquivos são servidos a partir do servidor mais próximo da localização geográfica do usuário. </p>
+<p> 4 - O backend realiza operações de leitura e escrita em um banco de dados MySQL. Todos os dados da aplicação, incluindo informações de usuários e dados de transações, são armazenados de forma segura. </p>
+<p> 5 - A sincronização do código-fonte da aplicação com o GitHub permite uma integração contínua (CI) e entrega contínua (CD), facilitando o deploy de novas versões diretamente na instância EC2. Um script Bash pode ser configurado para fazer a sincronização automática, reduzindo a necessidade de intervenções manuais. </p>
+<p> 6 - O gerenciamento e monitoramento de recursos são realizados através de ferramentas como o AWS CloudWatch e AWS IAM. O CloudWatch é responsável por coletar e monitorar métricas, enquanto o IAM (Identity and Access Management) fornece controle de acesso granular aos serviços AWS, aumentando a segurança. </p>
+
+
+
+

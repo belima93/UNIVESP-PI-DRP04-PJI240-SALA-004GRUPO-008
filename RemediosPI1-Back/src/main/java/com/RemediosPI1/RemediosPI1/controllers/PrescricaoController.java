@@ -16,7 +16,7 @@ import com.RemediosPI1.RemediosPI1.models.PrescricaoModel;
 import com.RemediosPI1.RemediosPI1.services.PrescricaoService;
 
 @RestController
-@RequestMapping("/api/prescricoes")
+@RequestMapping("/prescricoes")
 public class PrescricaoController {
 
     private final PrescricaoService prescricaoService;

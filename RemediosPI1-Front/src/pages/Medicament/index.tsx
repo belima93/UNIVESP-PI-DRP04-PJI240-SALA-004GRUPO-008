@@ -14,7 +14,6 @@ interface FormData {
 
 const Medicament = () => {
   const initialValues: FormData = {
- 
     formula: "",
     quantidade: 0,
     vencimento: ""
@@ -29,7 +28,7 @@ const Medicament = () => {
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
 
     try {
-      const { status } = await api.post('/medicamento', values, {
+      const { status } = await api.post('/medicamentos', values, {
         headers: {
           'Content-Type': 'application/json'
         }

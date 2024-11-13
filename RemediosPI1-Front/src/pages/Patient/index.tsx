@@ -76,7 +76,7 @@ const Patient = () => {
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
 
     try {
-      const { status } = await api.post('/paciente', values, {
+      const { status } = await api.post('/pacientes', values, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -112,7 +112,7 @@ const Patient = () => {
           {({ errors, setFieldValue, values, touched }) => (
             <Form>
               <FormControl mt={7} position='relative'>
-                <FormLabel htmlFor='cpf' color='#808080'>CPF do paciente</FormLabel>
+                <FormLabel htmlFor='cpf' aria-labelledby="cpf" color='#808080'>CPF do paciente</FormLabel>
                 <Field
                   as={Input}
                   id='cpf'
@@ -131,12 +131,12 @@ const Patient = () => {
 
               <FormControl mt={7} display='flex' alignItems='center' gap={15}>
                 <FormControl position='relative'>
-                  <FormLabel htmlFor='nome' color='#808080'>Nome do paciente</FormLabel>
+                  <FormLabel htmlFor='nome' aria-labelledby="nome" color='#808080'>Nome do paciente</FormLabel>
                   <Field as={Input} id='nome' name='nome' type='text' placeholder='Digite o nome completo' />
                   {errors.nome && touched.nome && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.nome}</Text>}
                 </FormControl>
                 <FormControl position='relative'>
-                  <FormLabel htmlFor='telefone' color='#808080'>Telefone do paciente</FormLabel>
+                  <FormLabel htmlFor='telefone' aria-labelledby="telefone" color='#808080'>Telefone do paciente</FormLabel>
                   <Field
                     as={Input}
                     id='telefone'
@@ -154,10 +154,10 @@ const Patient = () => {
               </FormControl>
 
               <FormControl mt={7}>
-                <FormLabel htmlFor='address' color='#808080'>Endereço do paciente</FormLabel>
+                <FormLabel color='#808080'>Endereço do paciente</FormLabel>
                 <FormControl display='flex' alignItems='center' gap={15}>
                   <FormControl w='350px' position='relative'>
-                    <Field as={Input} id='cep' name='cep' type='text' placeholder='CEP' />
+                    <Field as={Input} id='cep' name='cep' type='text' placeholder='CEP' data-testid="cep" />
                     {errors.cep && touched.cep && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.cep}</Text>}
                   </FormControl>
                 </FormControl>
@@ -166,11 +166,11 @@ const Patient = () => {
               <FormControl mt={7}>
                 <FormControl display='flex' alignItems='center' gap={15}>
                   <FormControl position='relative'>
-                    <Field as={Input} id='rua' name='rua' type='text' placeholder='Informe o endereço completo' />
+                    <Field as={Input} id='rua' name='rua' type='text' placeholder='Informe o endereço completo' data-testid="rua" />
                     {errors.rua && touched.rua && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.rua}</Text>}
                   </FormControl>
                   <FormControl w='350px' position='relative'>
-                    <Field as={Input} id='numero' name='numero' type='text' placeholder='Número' />
+                    <Field as={Input} id='numero' name='numero' type='text' placeholder='Número' data-testid="numero"/>
                     {errors.numero && touched.numero && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.numero}</Text>}
                   </FormControl>
                 </FormControl>
@@ -179,11 +179,11 @@ const Patient = () => {
               <FormControl mt={7}>
                 <FormControl display='flex' alignItems='center' gap={15}>
                   <FormControl position='relative'>
-                    <Field as={Input} id='bairro' name='bairro' type='text' placeholder='Informe o bairro' />
+                    <Field as={Input} id='bairro' name='bairro' type='text' placeholder='Informe o bairro' data-testid="bairro"/>
                     {errors.bairro && touched.bairro && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px' >{errors.bairro}</Text>}
                   </FormControl>
                   <FormControl position='relative'>
-                    <Field as={Input} id='complemento' name='complemento' type='text' placeholder='Complemento' />
+                    <Field as={Input} id='complemento' name='complemento' type='text' placeholder='Complemento' data-testid="complemento"/>
                   </FormControl>
                 </FormControl>
               </FormControl>
@@ -191,11 +191,11 @@ const Patient = () => {
               <FormControl mt={7}>
                 <FormControl display='flex' alignItems='center' gap={15}>
                   <FormControl position='relative'>
-                    <Field as={Input} id='cidade' name='cidade' type='text' placeholder='Informe a cidade' />
+                    <Field as={Input} id='cidade' name='cidade' type='text' placeholder='Informe a cidade' data-testid="cidade"/>
                     {errors.cidade && touched.cidade && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.cidade}</Text>}
                   </FormControl>
                   <FormControl w='350px' position='relative'>
-                    <Field as={Input} id='uf' name='uf' type='text' placeholder='Informe o UF' />
+                    <Field as={Input} id='uf' name='uf' type='text' placeholder='Informe o UF' data-testid="uf"/>
                     {errors.uf && touched.uf && <Text color='#ff0000' fontSize={14} fontWeight='500' pl={1} position='absolute' left={0} bottom='-20px'>{errors.uf}</Text>}
                   </FormControl>
                 </FormControl>
