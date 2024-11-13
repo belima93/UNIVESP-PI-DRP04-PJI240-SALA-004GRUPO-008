@@ -50,7 +50,7 @@ export default function Login() {
     try {
      
       const response = await api.post(`login`,values)
-      debugger
+      
       
       if (response.status == 200) {
         toast.success("Seja bem-vindo(a)!")

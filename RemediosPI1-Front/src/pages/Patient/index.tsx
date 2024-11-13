@@ -76,7 +76,7 @@ const Patient = () => {
   const handleSubmitForm = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
 
     try {
-      const { status } = await api.post('/paciente', values, {
+      const { status } = await api.post('/pacientes', values, {
         headers: {
           'Content-Type': 'application/json'
         }
