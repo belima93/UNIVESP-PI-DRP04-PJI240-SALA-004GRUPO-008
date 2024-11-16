@@ -94,7 +94,7 @@ public class MedicamentoControllerTest {
         }
         """;
 
-        mockMvc.perform(post("/api/medicamentos")
+        mockMvc.perform(post("/medicamentos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk())
@@ -110,7 +110,7 @@ public class MedicamentoControllerTest {
     public void testDeleteMedicamento() throws Exception {
         doNothing().when(medicamentoService).deleteMedicamento(1L);
 
-        mockMvc.perform(delete("/api/medicamentos/1"))
+        mockMvc.perform(delete("/medicamentos/1"))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
