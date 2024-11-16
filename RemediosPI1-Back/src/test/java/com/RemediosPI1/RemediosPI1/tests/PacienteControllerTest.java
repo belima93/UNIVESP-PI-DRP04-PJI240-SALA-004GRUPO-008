@@ -43,7 +43,7 @@ public class PacienteControllerTest {
 
         when(pacienteService.getAllPacientes()).thenReturn(Arrays.asList(paciente1, paciente2));
 
-        mockMvc.perform(get("/api/pacientes"))
+        mockMvc.perform(get("/pacientes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].nome").value("João da Silva"))
