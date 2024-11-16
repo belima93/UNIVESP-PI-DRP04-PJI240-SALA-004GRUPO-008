@@ -60,7 +60,7 @@ public class MedicamentoControllerTest {
 
         when(medicamentoService.getMedicamentoById(1L)).thenReturn(Optional.of(medicamento));
 
-        mockMvc.perform(get("/api/medicamentos/1"))
+        mockMvc.perform(get("/medicamentos/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.formula").value("Aspirina"))
