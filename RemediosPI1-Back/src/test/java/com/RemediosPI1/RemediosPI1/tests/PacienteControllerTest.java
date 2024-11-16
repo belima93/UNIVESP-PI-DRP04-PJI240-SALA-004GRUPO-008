@@ -60,7 +60,7 @@ public class PacienteControllerTest {
 
         when(pacienteService.getPacienteById(1L)).thenReturn(Optional.of(paciente));
 
-        mockMvc.perform(get("/api/pacientes/1"))
+        mockMvc.perform(get("/pacientes/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.nome").value("João da Silva"))
@@ -73,7 +73,7 @@ public class PacienteControllerTest {
     public void testGetPacienteByIdNaoEncontrado() throws Exception {
         when(pacienteService.getPacienteById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/api/pacientes/1"))
+        mockMvc.perform(get("/pacientes/1"))
                 .andExpect(status().isNotFound())
                 .andDo(print());
 
@@ -99,7 +99,7 @@ public class PacienteControllerTest {
         }
         """;
 
-        mockMvc.perform(post("/api/pacientes")
+        mockMvc.perform(post("/pacientes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk())
