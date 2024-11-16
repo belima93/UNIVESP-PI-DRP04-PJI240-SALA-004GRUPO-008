@@ -114,7 +114,7 @@ public class PacienteControllerTest {
     public void testDeletePaciente() throws Exception {
         doNothing().when(pacienteService).deletePaciente(1L);
 
-        mockMvc.perform(delete("/api/pacientes/1"))
+        mockMvc.perform(delete("/pacientes/1"))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
