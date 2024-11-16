@@ -115,7 +115,7 @@ public class PrescricaoControllerTest {
     public void testDeletePrescricao() throws Exception {
         doNothing().when(prescricaoService).deletePrescricao(1L);
 
-        mockMvc.perform(delete("/api/prescricoes/1"))
+        mockMvc.perform(delete("prescricoes/1"))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
