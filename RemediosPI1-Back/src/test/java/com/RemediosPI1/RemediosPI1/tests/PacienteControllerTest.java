@@ -43,7 +43,7 @@ public class PacienteControllerTest {
 
         when(pacienteService.getAllPacientes()).thenReturn(Arrays.asList(paciente1, paciente2));
 
-        mockMvc.perform(get("/api/pacientes"))
+        mockMvc.perform(get("/pacientes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].nome").value("João da Silva"))
@@ -60,7 +60,7 @@ public class PacienteControllerTest {
 
         when(pacienteService.getPacienteById(1L)).thenReturn(Optional.of(paciente));
 
-        mockMvc.perform(get("/api/pacientes/1"))
+        mockMvc.perform(get("/pacientes/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.nome").value("João da Silva"))
@@ -73,7 +73,7 @@ public class PacienteControllerTest {
     public void testGetPacienteByIdNaoEncontrado() throws Exception {
         when(pacienteService.getPacienteById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/api/pacientes/1"))
+        mockMvc.perform(get("/pacientes/1"))
                 .andExpect(status().isNotFound())
                 .andDo(print());
 
@@ -99,7 +99,7 @@ public class PacienteControllerTest {
         }
         """;
 
-        mockMvc.perform(post("/api/pacientes")
+        mockMvc.perform(post("/pacientes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk())
@@ -114,7 +114,7 @@ public class PacienteControllerTest {
     public void testDeletePaciente() throws Exception {
         doNothing().when(pacienteService).deletePaciente(1L);
 
-        mockMvc.perform(delete("/api/pacientes/1"))
+        mockMvc.perform(delete("/pacientes/1"))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 

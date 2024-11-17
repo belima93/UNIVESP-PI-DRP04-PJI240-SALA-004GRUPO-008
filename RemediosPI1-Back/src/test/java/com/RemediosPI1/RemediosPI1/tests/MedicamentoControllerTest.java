@@ -60,7 +60,7 @@ public class MedicamentoControllerTest {
 
         when(medicamentoService.getMedicamentoById(1L)).thenReturn(Optional.of(medicamento));
 
-        mockMvc.perform(get("/api/medicamentos/1"))
+        mockMvc.perform(get("/medicamentos/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.formula").value("Aspirina"))
@@ -94,7 +94,7 @@ public class MedicamentoControllerTest {
         }
         """;
 
-        mockMvc.perform(post("/api/medicamentos")
+        mockMvc.perform(post("/medicamentos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk())
@@ -110,7 +110,7 @@ public class MedicamentoControllerTest {
     public void testDeleteMedicamento() throws Exception {
         doNothing().when(medicamentoService).deleteMedicamento(1L);
 
-        mockMvc.perform(delete("/api/medicamentos/1"))
+        mockMvc.perform(delete("/medicamentos/1"))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
