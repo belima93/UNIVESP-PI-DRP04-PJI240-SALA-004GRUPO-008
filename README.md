@@ -1,7 +1,5 @@
 <h1 align="center"><b>REMÉDIO SOLIDÁRIO – SOFTWARE DE GESTÃO DE REAPROVEITAMENTO DE REMÉDIOS PELA REDE PÚBLICA DE SAÚDE</b></h1>
 
-#### URL Provisória: http://34.228.15.39:5173
-
 <p align="center">
   <img src="https://github.com/KarenBoscolo/PIRemediosGeral/assets/149967716/89a5dc51-ac92-4dc1-a3c0-be602f63570d" alt="Remédio Solidário">
 </p>
@@ -44,6 +42,36 @@ __________________________________________________________________________
 <p> 4 - O backend realiza operações de leitura e escrita em um banco de dados MySQL. Todos os dados da aplicação, incluindo informações de usuários e dados de transações, são armazenados de forma segura. </p>
 <p> 5 - A sincronização do código-fonte da aplicação com o GitHub permite uma integração contínua (CI) e entrega contínua (CD), facilitando o deploy de novas versões diretamente na instância EC2. Um script Bash pode ser configurado para fazer a sincronização automática, reduzindo a necessidade de intervenções manuais. </p>
 <p> 6 - O gerenciamento e monitoramento de recursos são realizados através de ferramentas como o AWS CloudWatch e AWS IAM. O CloudWatch é responsável por coletar e monitorar métricas, enquanto o IAM (Identity and Access Management) fornece controle de acesso granular aos serviços AWS, aumentando a segurança. </p>
+
+__________________________________________________________________________
+
+## JORNADA DO USUARIO
+
+http:// 34.235.153.253:5173/home/
+
+<p> Tela de Login:</p>
+
+<img src="img/tela-de-login.png" alt="Login" width="800">
+
+<p> Cadastro de Paciente </p>
+
+<img src="img/tela-de-cadastro-paciente.png" alt="Login" width="800">
+
+<p> Lista de Pacientes </p>
+
+<img src="img/lista-pacientes.png" alt="Login" width="800">
+
+<p> Lista de Medicamento </p>
+
+<img src="img/lista-medicamento.png" alt="Login" width="800">
+
+<p> Dispensação </p>
+
+<img src="img/dispensacao.png" alt="Login" width="800">
+
+
+
+
 
 
 
